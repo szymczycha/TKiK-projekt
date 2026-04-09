@@ -1,2 +1,2 @@
 # TKiK-projekt
-Projekt translatora progrmów w języku Pascal do języka C
+Projekt konwerteraprogrmów w języku Pascal do języka C
