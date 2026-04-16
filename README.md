@@ -9,3 +9,4 @@ Projekt konwertera progrmów w języku Pascal do języka C
     - planowany język implementacji: python
     - wejście: poprawny program w języku Pascal
     - wyjście: program przekonwertowany na program w języku C
+    - generator parserów: ANTLR
