@@ -1,4 +1,4 @@
-# TKiK-projekt
+# Konwerter PASCAL do C
 Projekt konwertera progrmów w języku Pascal do języka C
 
 - Autor:
