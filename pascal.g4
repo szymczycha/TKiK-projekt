@@ -3,10 +3,13 @@ grammar pascal;
 program : program_header block DOT;
 program_header : KW_PROGRAM IDENTIFIER ('('('input')? (','? 'output')?')')? ';' ;
 
-declarations : type_declarations? var_declarations? func_and_proc_declarations? ;
+declarations : type_declarations? const_declarations? var_declarations? func_and_proc_declarations? ;
 
 type_declarations : KW_TYPE type_decl+; //TODO
 type_decl : IDENTIFIER '=' type_spec ';';
+
+const_declarations : KW_CONST const_decl+;
+const_decl : IDENTIFIER (',' IDENTIFIER)* '=' literal ';';
 
 var_declarations : KW_VAR var_decl+ ;
 var_decl : IDENTIFIER (',' IDENTIFIER)* ':' type_spec ';' ;
@@ -57,31 +60,22 @@ while_loop : KW_WHILE expression KW_DO statement;
 function_call : IDENTIFIER '(' arg_list? ')';
 arg_list : expression (',' expression)* ;
 
-expression : relation ;
-
-relation
-    : addition (('=' | '<>' | '<' | '<=' | '>' | '>=') addition)*
-    ;
-
-addition
-    : term (('+' | '-') term)*
-    ;
-
-term
-    : factor (('*' | '/' | KW_DIV | KW_MOD) factor)*
-    ;
-
+expression : orExpr ;
+orExpr : andExpr (KW_OR andExpr)* ;
+andExpr : relation (KW_AND relation)* ;
+relation : addition ((EQ | NE | LT | LE | GT | GE) addition)* ;
+addition : term (('+' | '-') term)* ;
+term : factor (('*' | '/' | KW_DIV | KW_MOD) factor)* ;
 factor : op=('+'|'-'|KW_NOT) factor 
     | literal
     | function_call
-    | LOGIC_LITERAL
     | IDENTIFIER
     | '(' expression ')'
     ;
 
 assignment : IDENTIFIER ASSIGN expression;
 
-literal : NUMBER | STRING;
+literal : NUMBER | STRING | LOGIC_LITERAL;
 
 
 KW_AND        : 'and' ;
