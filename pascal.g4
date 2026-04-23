@@ -5,7 +5,7 @@ program_header : KW_PROGRAM IDENTIFIER ('('('input')? (','? 'output')?')')? ';' 
 
 declarations : type_declarations? const_declarations? var_declarations? func_and_proc_declarations? ;
 
-type_declarations : KW_TYPE type_decl+; //TODO
+type_declarations : KW_TYPE type_decl+;
 type_decl : IDENTIFIER '=' type_spec ';';
 
 const_declarations : KW_CONST const_decl+;
