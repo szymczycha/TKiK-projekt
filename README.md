@@ -11,7 +11,7 @@ Projekt konwertera progrmów w języku Pascal do języka C
     - wyjście: program przekonwertowany na program w języku C
     - generator parserów: ANTLR
 
- - Gramatyka jest w pliku pascal.g4
+ - Gramatyka jest w pliku [pascal.g4](https://github.com/szymczycha/TKiK-projekt/blob/main/pascal.g4)
  - Spis tokenów rozpoznawanych przez lexer:
 
 | Token             | Wzorzec                 | Opis |
