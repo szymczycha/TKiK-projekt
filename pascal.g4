@@ -67,7 +67,7 @@ andExpr : relation (KW_AND relation)* ;
 relation : addition ((EQ | NE | LT | LE | GT | GE) addition)* ;
 addition : term (('+' | '-') term)* ;
 term : factor (('*' | '/' | KW_DIV | KW_MOD) factor)* ;
-factor : op=('+'|'-'|KW_NOT) factor 
+factor : ('+'|'-'|KW_NOT) factor 
     | literal
     | function_call
     | IDENTIFIER
@@ -108,12 +108,7 @@ KW_TYPE       : 'type' ;
 KW_UNTIL      : 'until' ;
 KW_VAR        : 'var' ;
 KW_WHILE      : 'while' ;
-// KW_GOTO       : 'goto' ;
-// KW_LABEL      : 'label' ;
-// KW_PACKED     : 'packed' ;
-// KW_FILE       : 'file' ;
-// KW_WITH       : 'with' ;
-// KW_RECORD     : 'record' ;
+
 
 KW_INTEGER : 'integer';
 KW_REAL    : 'real';
