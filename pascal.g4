@@ -5,8 +5,9 @@ program_header : KW_PROGRAM IDENTIFIER ('('('input')? (','? 'output')?')')? ';' 
 
 declarations : type_declarations? const_declarations? var_declarations? func_and_proc_declarations? ;
 
-type_declarations : KW_TYPE type_decl+;
+type_declarations : KW_TYPE (type_decl | array_decl)+;
 type_decl : IDENTIFIER '=' type_spec ';';
+array_decl: IDENTIFIER '=' KW_ARRAY '[' ARRAY_INDEX_TYPE (',' ARRAY_INDEX_TYPE)* ']' KW_OF type_spec ';' ;
 
 const_declarations : KW_CONST const_decl+;
 const_decl : IDENTIFIER (',' IDENTIFIER)* '=' literal ';';
@@ -75,7 +76,7 @@ factor : op=('+'|'-'|KW_NOT) factor
 
 assignment : IDENTIFIER ASSIGN expression;
 
-literal : NUMBER | STRING | LOGIC_LITERAL;
+literal : NUMBER | STRING | LOGIC_LITERAL | KW_NIL;
 
 
 KW_AND        : 'and' ;
@@ -88,22 +89,17 @@ KW_DO         : 'do' ;
 KW_DOWNTO     : 'downto' ;
 KW_ELSE       : 'else' ;
 KW_END        : 'end' ;
-KW_FILE       : 'file' ;
 KW_FOR        : 'for' ;
 KW_FUNCTION   : 'function' ;
-KW_GOTO       : 'goto' ;
 KW_IF         : 'if' ;
 KW_IN         : 'in' ;
-KW_LABEL      : 'label' ;
 KW_MOD        : 'mod' ;
 KW_NIL        : 'nil' ;
 KW_NOT        : 'not' ;
 KW_OF         : 'of' ;
 KW_OR         : 'or' ;
-KW_PACKED     : 'packed' ;
 KW_PROCEDURE  : 'procedure' ;
 KW_PROGRAM    : 'program' ;
-KW_RECORD     : 'record' ;
 KW_REPEAT     : 'repeat' ;
 KW_SET        : 'set' ;
 KW_THEN       : 'then' ;
@@ -112,7 +108,12 @@ KW_TYPE       : 'type' ;
 KW_UNTIL      : 'until' ;
 KW_VAR        : 'var' ;
 KW_WHILE      : 'while' ;
-KW_WITH       : 'with' ;
+// KW_GOTO       : 'goto' ;
+// KW_LABEL      : 'label' ;
+// KW_PACKED     : 'packed' ;
+// KW_FILE       : 'file' ;
+// KW_WITH       : 'with' ;
+// KW_RECORD     : 'record' ;
 
 KW_INTEGER : 'integer';
 KW_REAL    : 'real';
@@ -139,6 +140,7 @@ NE : '<>';
 ASSIGN     : ':=';
 DOT        : '.';
 
+ARRAY_INDEX_TYPE: '-'?[0-9]+ ('..''-'?[0-9]+)?; // used in array declaration
 NUMBER     : [0-9]+('.' [0-9]+)? ;
 STRING     : '\'' ( '\'\'' | ~'\'' )* '\'' ;
 
