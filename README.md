@@ -10,3 +10,5 @@ Projekt konwertera progrmów w języku Pascal do języka C
     - wejście: poprawny program w języku Pascal
     - wyjście: program przekonwertowany na program w języku C
     - generator parserów: ANTLR
+
+ - Gramatyka jest w pliku pascal.g4
