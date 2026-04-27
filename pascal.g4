@@ -71,7 +71,7 @@ term : factor (('*' | '/' | KW_DIV | KW_MOD) factor)* ;
 factor : ('+'|'-'|KW_NOT) factor 
     | literal
     | function_call
-    | IDENTIFIER
+    | IDENTIFIER ('[' ARRAY_INDEX ']')
     | '(' expression ')'
     ;
 
