@@ -54,18 +54,19 @@ for_loop : KW_FOR IDENTIFIER ASSIGN expression (KW_TO | KW_DOWNTO) expression KW
 
 repeat_loop : KW_REPEAT statement_list KW_UNTIL expression;
 
-if_block : KW_IF expression KW_THEN statement (KW_ELSE statement)?;
+if_block : KW_IF logic_expression KW_THEN statement (KW_ELSE statement)?;
 
-while_loop : KW_WHILE expression KW_DO statement;
+while_loop : KW_WHILE logic_expression KW_DO statement;
 
 function_call : IDENTIFIER '(' arg_list? ')';
 arg_list : expression (',' expression)* ;
 
-expression : orExpr ;
+logic_expression : orExpr;
 orExpr : andExpr (KW_OR andExpr)* ;
 andExpr : relation (KW_AND relation)* ;
-relation : addition ((EQ | NE | LT | LE | GT | GE) addition)* ;
-addition : term (('+' | '-') term)* ;
+relation : expression ((EQ | NE | LT | LE | GT | GE) expression)+ ;
+
+expression : term (('+' | '-') term)* ;
 term : factor (('*' | '/' | KW_DIV | KW_MOD) factor)* ;
 factor : ('+'|'-'|KW_NOT) factor 
     | literal
@@ -74,9 +75,10 @@ factor : ('+'|'-'|KW_NOT) factor
     | '(' expression ')'
     ;
 
-assignment : IDENTIFIER ASSIGN expression;
+assignment : IDENTIFIER ('[' ARRAY_INDEX ']')? ASSIGN expression;
 
-literal : NUMBER | STRING | LOGIC_LITERAL | KW_NIL;
+literal : NUMBER | STRING | LOGIC_LITERAL | KW_NIL | array_literal;
+array_literal : '(' (expression (',' expression)*)? ')';
 
 
 KW_AND        : 'and' ;
@@ -137,6 +139,7 @@ DOT        : '.';
 
 ARRAY_INDEX_TYPE: '-'?[0-9]+ ('..''-'?[0-9]+)?; // used in array declaration
 NUMBER     : [0-9]+('.' [0-9]+)? ;
+ARRAY_INDEX : [0-9]+;
 STRING     : '\'' ( '\'\'' | ~'\'' )* '\'' ;
 
 WS         : [ \t\r\n]+ -> skip ;
