@@ -29,7 +29,7 @@ Projekt konwertera progrmów w języku Pascal do języka C
 | KW_FOR           | `'for'`                           | pętla for |
 | KW_FUNCTION      | `'function'`                      | deklaracja funkcji |
 | KW_IF            | `'if'`                            | instrukcja warunkowa |
-| KW_IN            | `'in'`                            | operator in (niewykorzystany) |
+| KW_IN            | `'in'`                            | operator in |
 | KW_MOD           | `'mod'`                           | modulo |
 | KW_NIL           | `'nil'`                           | wartość pusta |
 | KW_NOT           | `'not'`                           | negacja |
@@ -38,7 +38,7 @@ Projekt konwertera progrmów w języku Pascal do języka C
 | KW_PROCEDURE     | `'procedure'`                     | deklaracja procedury |
 | KW_PROGRAM       | `'program'`                       | nagłówek programu |
 | KW_REPEAT        | `'repeat'`                        | pętla repeat |
-| KW_SET           | `'set'`                           | zbiór (niewykorzystany) |
+| KW_SET           | `'set'`                           | zbiór |
 | KW_THEN          | `'then'`                          | część if |
 | KW_TO            | `'to'`                            | pętla rosnąca |
 | KW_TYPE          | `'type'`                          | deklaracja typów |
