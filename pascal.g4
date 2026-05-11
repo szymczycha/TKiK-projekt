@@ -5,9 +5,9 @@ program_header : KW_PROGRAM IDENTIFIER ('('('input')? (','? 'output')?')')? ';' 
 
 declarations : type_declarations? const_declarations? var_declarations? func_and_proc_declarations? ;
 
-type_declarations : KW_TYPE (type_decl | array_decl)+;
-type_decl : IDENTIFIER '=' type_spec ';';
-array_decl: IDENTIFIER '=' KW_ARRAY '[' ARRAY_INDEX_TYPE (',' ARRAY_INDEX_TYPE)* ']' KW_OF type_spec ';' ;
+type_declarations : KW_TYPE type_decl+;
+type_decl : IDENTIFIER '=' (type_spec | record_spec) ';';
+record_spec : KW_RECORD (IDENTIFIER ':' type_spec ';')+ KW_END;
 
 const_declarations : KW_CONST const_decl+;
 const_decl : IDENTIFIER (',' IDENTIFIER)* '=' literal ';';
@@ -18,6 +18,8 @@ type_spec : KW_INTEGER
     | KW_REAL
     | KW_BOOLEAN
     | KW_STRING
+    | IDENTIFIER
+    | KW_ARRAY '[' array_index_type (',' array_index_type)* ']' KW_OF type_spec
     ;
 
 func_and_proc_declarations : (func_declaration | proc_declaration)+ ;
@@ -64,22 +66,24 @@ arg_list : expression (',' expression)* ;
 logic_expression : orExpr;
 orExpr : andExpr (KW_OR andExpr)* ;
 andExpr : relation (KW_AND relation)* ;
-relation : expression ((EQ | NE | LT | LE | GT | GE) expression)+ ;
+relation : expression ((EQ | NE | LT | LE | GT | GE) expression)? 
+    | KW_NOT logic_expression
+    | '(' logic_expression ')';
 
 expression : term (('+' | '-') term)* ;
 term : factor (('*' | '/' | KW_DIV | KW_MOD) factor)* ;
-factor : ('+'|'-'|KW_NOT) factor 
+factor : ('+'|'-') factor 
     | literal
     | function_call
-    | IDENTIFIER ('[' ARRAY_INDEX ']')
-    | '(' expression ')'
-    ;
+    | IDENTIFIER (('[' expression ']' | '.' IDENTIFIER))*
+    | '(' expression ')';
 
-assignment : IDENTIFIER ('[' ARRAY_INDEX ']')? ASSIGN expression;
+assignment : IDENTIFIER (('[' expression ']' | '.' IDENTIFIER))* ASSIGN (expression | logic_expression);
 
 literal : NUMBER | STRING | LOGIC_LITERAL | KW_NIL | array_literal;
 array_literal : '(' (expression (',' expression)*)? ')';
 
+array_index_type: '-'?NUMBER ('..''-'?NUMBER)?; // used in array declaration
 
 KW_AND        : 'and' ;
 KW_ARRAY      : 'array' ;
@@ -102,8 +106,8 @@ KW_OF         : 'of' ;
 KW_OR         : 'or' ;
 KW_PROCEDURE  : 'procedure' ;
 KW_PROGRAM    : 'program' ;
+KW_RECORD     : 'record' ;
 KW_REPEAT     : 'repeat' ;
-KW_SET        : 'set' ;
 KW_THEN       : 'then' ;
 KW_TO         : 'to' ;
 KW_TYPE       : 'type' ;
@@ -137,12 +141,11 @@ NE : '<>';
 ASSIGN     : ':=';
 DOT        : '.';
 
-ARRAY_INDEX_TYPE: '-'?[0-9]+ ('..''-'?[0-9]+)?; // used in array declaration
 NUMBER     : [0-9]+('.' [0-9]+)? ;
-ARRAY_INDEX : [0-9]+;
 STRING     : '\'' ( '\'\'' | ~'\'' )* '\'' ;
 
 WS         : [ \t\r\n]+ -> skip ;
 COMMENT    : '(*' .*? '*)' -> skip ;
+OTHER_COMMENT : '{' .*? '}' -> skip;
 LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 IDENTIFIER : [a-zA-Z_][a-zA-Z_0-9]* ;

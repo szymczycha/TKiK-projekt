@@ -53,6 +53,33 @@ class pascalListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pascalParser#record_spec.
+    def enterRecord_spec(self, ctx:pascalParser.Record_specContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#record_spec.
+    def exitRecord_spec(self, ctx:pascalParser.Record_specContext):
+        pass
+
+
+    # Enter a parse tree produced by pascalParser#const_declarations.
+    def enterConst_declarations(self, ctx:pascalParser.Const_declarationsContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#const_declarations.
+    def exitConst_declarations(self, ctx:pascalParser.Const_declarationsContext):
+        pass
+
+
+    # Enter a parse tree produced by pascalParser#const_decl.
+    def enterConst_decl(self, ctx:pascalParser.Const_declContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#const_decl.
+    def exitConst_decl(self, ctx:pascalParser.Const_declContext):
+        pass
+
+
     # Enter a parse tree produced by pascalParser#var_declarations.
     def enterVar_declarations(self, ctx:pascalParser.Var_declarationsContext):
         pass
@@ -242,12 +269,30 @@ class pascalListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by pascalParser#expression.
-    def enterExpression(self, ctx:pascalParser.ExpressionContext):
+    # Enter a parse tree produced by pascalParser#logic_expression.
+    def enterLogic_expression(self, ctx:pascalParser.Logic_expressionContext):
         pass
 
-    # Exit a parse tree produced by pascalParser#expression.
-    def exitExpression(self, ctx:pascalParser.ExpressionContext):
+    # Exit a parse tree produced by pascalParser#logic_expression.
+    def exitLogic_expression(self, ctx:pascalParser.Logic_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by pascalParser#orExpr.
+    def enterOrExpr(self, ctx:pascalParser.OrExprContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#orExpr.
+    def exitOrExpr(self, ctx:pascalParser.OrExprContext):
+        pass
+
+
+    # Enter a parse tree produced by pascalParser#andExpr.
+    def enterAndExpr(self, ctx:pascalParser.AndExprContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#andExpr.
+    def exitAndExpr(self, ctx:pascalParser.AndExprContext):
         pass
 
 
@@ -260,12 +305,12 @@ class pascalListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by pascalParser#addition.
-    def enterAddition(self, ctx:pascalParser.AdditionContext):
+    # Enter a parse tree produced by pascalParser#expression.
+    def enterExpression(self, ctx:pascalParser.ExpressionContext):
         pass
 
-    # Exit a parse tree produced by pascalParser#addition.
-    def exitAddition(self, ctx:pascalParser.AdditionContext):
+    # Exit a parse tree produced by pascalParser#expression.
+    def exitExpression(self, ctx:pascalParser.ExpressionContext):
         pass
 
 
@@ -302,6 +347,24 @@ class pascalListener(ParseTreeListener):
 
     # Exit a parse tree produced by pascalParser#literal.
     def exitLiteral(self, ctx:pascalParser.LiteralContext):
+        pass
+
+
+    # Enter a parse tree produced by pascalParser#array_literal.
+    def enterArray_literal(self, ctx:pascalParser.Array_literalContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#array_literal.
+    def exitArray_literal(self, ctx:pascalParser.Array_literalContext):
+        pass
+
+
+    # Enter a parse tree produced by pascalParser#array_index_type.
+    def enterArray_index_type(self, ctx:pascalParser.Array_index_typeContext):
+        pass
+
+    # Exit a parse tree produced by pascalParser#array_index_type.
+    def exitArray_index_type(self, ctx:pascalParser.Array_index_typeContext):
         pass
 
 
