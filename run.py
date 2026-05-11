@@ -4,7 +4,7 @@ from antlr.pascalParser import pascalParser
 
 from helper.functions import print_tree
 
-for i in range(1, 14):
+for i in range(1, 18):
     filename = f"pascal_code/{i}.pas"
     # filename = "pascal_code/9.pas"
     print(filename)
