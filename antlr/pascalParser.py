@@ -10,7 +10,7 @@ else:
 
 def serializedATN():
     return [
-        4,1,64,479,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,63,479,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
@@ -52,8 +52,8 @@ def serializedATN():
         38,462,9,38,3,38,464,8,38,1,38,1,38,1,39,3,39,469,8,39,1,39,1,39,
         1,39,3,39,474,8,39,1,39,3,39,477,8,39,1,39,0,0,40,0,2,4,6,8,10,12,
         14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,
-        58,60,62,64,66,68,70,72,74,76,78,0,5,2,0,58,59,64,64,2,0,22,22,40,
-        40,1,0,50,55,1,0,10,11,3,0,12,13,20,20,29,29,510,0,80,1,0,0,0,2,
+        58,60,62,64,66,68,70,72,74,76,78,0,5,2,0,57,58,63,63,2,0,22,22,39,
+        39,1,0,49,54,1,0,10,11,3,0,12,13,20,20,29,29,510,0,80,1,0,0,0,2,
         84,1,0,0,0,4,102,1,0,0,0,6,113,1,0,0,0,8,119,1,0,0,0,10,127,1,0,
         0,0,12,139,1,0,0,0,14,145,1,0,0,0,16,157,1,0,0,0,18,163,1,0,0,0,
         20,194,1,0,0,0,22,198,1,0,0,0,24,202,1,0,0,0,26,213,1,0,0,0,28,225,
@@ -63,8 +63,8 @@ def serializedATN():
         1,0,0,0,56,349,1,0,0,0,58,357,1,0,0,0,60,359,1,0,0,0,62,367,1,0,
         0,0,64,386,1,0,0,0,66,388,1,0,0,0,68,396,1,0,0,0,70,426,1,0,0,0,
         72,428,1,0,0,0,74,452,1,0,0,0,76,454,1,0,0,0,78,468,1,0,0,0,80,81,
-        3,2,1,0,81,82,3,32,16,0,82,83,5,57,0,0,83,1,1,0,0,0,84,85,5,35,0,
-        0,85,97,5,64,0,0,86,88,5,1,0,0,87,89,5,2,0,0,88,87,1,0,0,0,88,89,
+        3,2,1,0,81,82,3,32,16,0,82,83,5,56,0,0,83,1,1,0,0,0,84,85,5,35,0,
+        0,85,97,5,63,0,0,86,88,5,1,0,0,87,89,5,2,0,0,88,87,1,0,0,0,88,89,
         1,0,0,0,89,94,1,0,0,0,90,92,5,3,0,0,91,90,1,0,0,0,91,92,1,0,0,0,
         92,93,1,0,0,0,93,95,5,4,0,0,94,91,1,0,0,0,94,95,1,0,0,0,95,96,1,
         0,0,0,96,98,5,5,0,0,97,86,1,0,0,0,97,98,1,0,0,0,98,99,1,0,0,0,99,
@@ -72,25 +72,25 @@ def serializedATN():
         1,0,0,0,103,105,1,0,0,0,104,106,3,12,6,0,105,104,1,0,0,0,105,106,
         1,0,0,0,106,108,1,0,0,0,107,109,3,16,8,0,108,107,1,0,0,0,108,109,
         1,0,0,0,109,111,1,0,0,0,110,112,3,22,11,0,111,110,1,0,0,0,111,112,
-        1,0,0,0,112,5,1,0,0,0,113,115,5,41,0,0,114,116,3,8,4,0,115,114,1,
+        1,0,0,0,112,5,1,0,0,0,113,115,5,40,0,0,114,116,3,8,4,0,115,114,1,
         0,0,0,116,117,1,0,0,0,117,115,1,0,0,0,117,118,1,0,0,0,118,7,1,0,
-        0,0,119,120,5,64,0,0,120,123,5,54,0,0,121,124,3,20,10,0,122,124,
+        0,0,119,120,5,63,0,0,120,123,5,53,0,0,121,124,3,20,10,0,122,124,
         3,10,5,0,123,121,1,0,0,0,123,122,1,0,0,0,124,125,1,0,0,0,125,126,
-        5,6,0,0,126,9,1,0,0,0,127,133,5,36,0,0,128,129,5,64,0,0,129,130,
+        5,6,0,0,126,9,1,0,0,0,127,133,5,36,0,0,128,129,5,63,0,0,129,130,
         5,7,0,0,130,131,3,20,10,0,131,132,5,6,0,0,132,134,1,0,0,0,133,128,
         1,0,0,0,134,135,1,0,0,0,135,133,1,0,0,0,135,136,1,0,0,0,136,137,
         1,0,0,0,137,138,5,24,0,0,138,11,1,0,0,0,139,141,5,19,0,0,140,142,
         3,14,7,0,141,140,1,0,0,0,142,143,1,0,0,0,143,141,1,0,0,0,143,144,
-        1,0,0,0,144,13,1,0,0,0,145,150,5,64,0,0,146,147,5,3,0,0,147,149,
-        5,64,0,0,148,146,1,0,0,0,149,152,1,0,0,0,150,148,1,0,0,0,150,151,
-        1,0,0,0,151,153,1,0,0,0,152,150,1,0,0,0,153,154,5,54,0,0,154,155,
-        3,74,37,0,155,156,5,6,0,0,156,15,1,0,0,0,157,159,5,43,0,0,158,160,
+        1,0,0,0,144,13,1,0,0,0,145,150,5,63,0,0,146,147,5,3,0,0,147,149,
+        5,63,0,0,148,146,1,0,0,0,149,152,1,0,0,0,150,148,1,0,0,0,150,151,
+        1,0,0,0,151,153,1,0,0,0,152,150,1,0,0,0,153,154,5,53,0,0,154,155,
+        3,74,37,0,155,156,5,6,0,0,156,15,1,0,0,0,157,159,5,42,0,0,158,160,
         3,18,9,0,159,158,1,0,0,0,160,161,1,0,0,0,161,159,1,0,0,0,161,162,
-        1,0,0,0,162,17,1,0,0,0,163,168,5,64,0,0,164,165,5,3,0,0,165,167,
-        5,64,0,0,166,164,1,0,0,0,167,170,1,0,0,0,168,166,1,0,0,0,168,169,
+        1,0,0,0,162,17,1,0,0,0,163,168,5,63,0,0,164,165,5,3,0,0,165,167,
+        5,63,0,0,166,164,1,0,0,0,167,170,1,0,0,0,168,166,1,0,0,0,168,169,
         1,0,0,0,169,171,1,0,0,0,170,168,1,0,0,0,171,172,5,7,0,0,172,173,
-        3,20,10,0,173,174,5,6,0,0,174,19,1,0,0,0,175,195,5,45,0,0,176,195,
-        5,46,0,0,177,195,5,47,0,0,178,195,5,48,0,0,179,195,5,64,0,0,180,
+        3,20,10,0,173,174,5,6,0,0,174,19,1,0,0,0,175,195,5,44,0,0,176,195,
+        5,45,0,0,177,195,5,46,0,0,178,195,5,47,0,0,179,195,5,63,0,0,180,
         181,5,16,0,0,181,182,5,8,0,0,182,187,3,78,39,0,183,184,5,3,0,0,184,
         186,3,78,39,0,185,183,1,0,0,0,186,189,1,0,0,0,187,185,1,0,0,0,187,
         188,1,0,0,0,188,190,1,0,0,0,189,187,1,0,0,0,190,191,5,9,0,0,191,
@@ -98,17 +98,17 @@ def serializedATN():
         176,1,0,0,0,194,177,1,0,0,0,194,178,1,0,0,0,194,179,1,0,0,0,194,
         180,1,0,0,0,195,21,1,0,0,0,196,199,3,24,12,0,197,199,3,30,15,0,198,
         196,1,0,0,0,198,197,1,0,0,0,199,200,1,0,0,0,200,198,1,0,0,0,200,
-        201,1,0,0,0,201,23,1,0,0,0,202,203,5,26,0,0,203,205,5,64,0,0,204,
+        201,1,0,0,0,201,23,1,0,0,0,202,203,5,26,0,0,203,205,5,63,0,0,204,
         206,3,26,13,0,205,204,1,0,0,0,205,206,1,0,0,0,206,207,1,0,0,0,207,
         208,5,7,0,0,208,209,3,20,10,0,209,210,5,6,0,0,210,211,3,32,16,0,
         211,212,5,6,0,0,212,25,1,0,0,0,213,214,5,1,0,0,214,219,3,28,14,0,
         215,216,5,6,0,0,216,218,3,28,14,0,217,215,1,0,0,0,218,221,1,0,0,
         0,219,217,1,0,0,0,219,220,1,0,0,0,220,222,1,0,0,0,221,219,1,0,0,
-        0,222,223,5,5,0,0,223,27,1,0,0,0,224,226,5,43,0,0,225,224,1,0,0,
-        0,225,226,1,0,0,0,226,227,1,0,0,0,227,232,5,64,0,0,228,229,5,3,0,
-        0,229,231,5,64,0,0,230,228,1,0,0,0,231,234,1,0,0,0,232,230,1,0,0,
+        0,222,223,5,5,0,0,223,27,1,0,0,0,224,226,5,42,0,0,225,224,1,0,0,
+        0,225,226,1,0,0,0,226,227,1,0,0,0,227,232,5,63,0,0,228,229,5,3,0,
+        0,229,231,5,63,0,0,230,228,1,0,0,0,231,234,1,0,0,0,232,230,1,0,0,
         0,232,233,1,0,0,0,233,235,1,0,0,0,234,232,1,0,0,0,235,236,5,7,0,
-        0,236,237,3,20,10,0,237,29,1,0,0,0,238,239,5,34,0,0,239,241,5,64,
+        0,236,237,3,20,10,0,237,29,1,0,0,0,238,239,5,34,0,0,239,241,5,63,
         0,0,240,242,3,26,13,0,241,240,1,0,0,0,241,242,1,0,0,0,242,243,1,
         0,0,0,243,244,5,6,0,0,244,245,3,32,16,0,245,246,5,6,0,0,246,31,1,
         0,0,0,247,248,3,4,2,0,248,250,5,17,0,0,249,251,3,36,18,0,250,249,
@@ -132,14 +132,14 @@ def serializedATN():
         307,3,44,22,0,303,304,5,3,0,0,304,306,3,44,22,0,305,303,1,0,0,0,
         306,309,1,0,0,0,307,305,1,0,0,0,307,308,1,0,0,0,308,310,1,0,0,0,
         309,307,1,0,0,0,310,311,5,7,0,0,311,312,3,38,19,0,312,43,1,0,0,0,
-        313,314,7,0,0,0,314,45,1,0,0,0,315,316,5,25,0,0,316,317,5,64,0,0,
-        317,318,5,56,0,0,318,319,3,66,33,0,319,320,7,1,0,0,320,321,3,66,
+        313,314,7,0,0,0,314,45,1,0,0,0,315,316,5,25,0,0,316,317,5,63,0,0,
+        317,318,5,55,0,0,318,319,3,66,33,0,319,320,7,1,0,0,320,321,3,66,
         33,0,321,322,5,21,0,0,322,323,3,38,19,0,323,47,1,0,0,0,324,325,5,
-        37,0,0,325,326,3,36,18,0,326,327,5,42,0,0,327,328,3,66,33,0,328,
-        49,1,0,0,0,329,330,5,27,0,0,330,331,3,58,29,0,331,332,5,39,0,0,332,
+        37,0,0,325,326,3,36,18,0,326,327,5,41,0,0,327,328,3,66,33,0,328,
+        49,1,0,0,0,329,330,5,27,0,0,330,331,3,58,29,0,331,332,5,38,0,0,332,
         335,3,38,19,0,333,334,5,23,0,0,334,336,3,38,19,0,335,333,1,0,0,0,
-        335,336,1,0,0,0,336,51,1,0,0,0,337,338,5,44,0,0,338,339,3,58,29,
-        0,339,340,5,21,0,0,340,341,3,38,19,0,341,53,1,0,0,0,342,343,5,64,
+        335,336,1,0,0,0,336,51,1,0,0,0,337,338,5,43,0,0,338,339,3,58,29,
+        0,339,340,5,21,0,0,340,341,3,38,19,0,341,53,1,0,0,0,342,343,5,63,
         0,0,343,345,5,1,0,0,344,346,3,56,28,0,345,344,1,0,0,0,345,346,1,
         0,0,0,346,347,1,0,0,0,347,348,5,5,0,0,348,55,1,0,0,0,349,354,3,66,
         33,0,350,351,5,3,0,0,351,353,3,66,33,0,352,350,1,0,0,0,353,356,1,
@@ -158,29 +158,29 @@ def serializedATN():
         67,1,0,0,0,395,393,1,0,0,0,396,401,3,70,35,0,397,398,7,4,0,0,398,
         400,3,70,35,0,399,397,1,0,0,0,400,403,1,0,0,0,401,399,1,0,0,0,401,
         402,1,0,0,0,402,69,1,0,0,0,403,401,1,0,0,0,404,405,7,3,0,0,405,427,
-        3,70,35,0,406,427,3,74,37,0,407,427,3,54,27,0,408,419,5,64,0,0,409,
+        3,70,35,0,406,427,3,74,37,0,407,427,3,54,27,0,408,419,5,63,0,0,409,
         410,5,8,0,0,410,411,3,66,33,0,411,412,5,9,0,0,412,416,1,0,0,0,413,
-        414,5,57,0,0,414,416,5,64,0,0,415,409,1,0,0,0,415,413,1,0,0,0,416,
+        414,5,56,0,0,414,416,5,63,0,0,415,409,1,0,0,0,415,413,1,0,0,0,416,
         418,1,0,0,0,417,415,1,0,0,0,418,421,1,0,0,0,419,417,1,0,0,0,419,
         420,1,0,0,0,420,427,1,0,0,0,421,419,1,0,0,0,422,423,5,1,0,0,423,
         424,3,66,33,0,424,425,5,5,0,0,425,427,1,0,0,0,426,404,1,0,0,0,426,
         406,1,0,0,0,426,407,1,0,0,0,426,408,1,0,0,0,426,422,1,0,0,0,427,
-        71,1,0,0,0,428,439,5,64,0,0,429,430,5,8,0,0,430,431,3,66,33,0,431,
-        432,5,9,0,0,432,436,1,0,0,0,433,434,5,57,0,0,434,436,5,64,0,0,435,
+        71,1,0,0,0,428,439,5,63,0,0,429,430,5,8,0,0,430,431,3,66,33,0,431,
+        432,5,9,0,0,432,436,1,0,0,0,433,434,5,56,0,0,434,436,5,63,0,0,435,
         429,1,0,0,0,435,433,1,0,0,0,436,438,1,0,0,0,437,435,1,0,0,0,438,
         441,1,0,0,0,439,437,1,0,0,0,439,440,1,0,0,0,440,442,1,0,0,0,441,
-        439,1,0,0,0,442,445,5,56,0,0,443,446,3,66,33,0,444,446,3,58,29,0,
-        445,443,1,0,0,0,445,444,1,0,0,0,446,73,1,0,0,0,447,453,5,58,0,0,
-        448,453,5,59,0,0,449,453,5,49,0,0,450,453,5,30,0,0,451,453,3,76,
+        439,1,0,0,0,442,445,5,55,0,0,443,446,3,66,33,0,444,446,3,58,29,0,
+        445,443,1,0,0,0,445,444,1,0,0,0,446,73,1,0,0,0,447,453,5,57,0,0,
+        448,453,5,58,0,0,449,453,5,48,0,0,450,453,5,30,0,0,451,453,3,76,
         38,0,452,447,1,0,0,0,452,448,1,0,0,0,452,449,1,0,0,0,452,450,1,0,
         0,0,452,451,1,0,0,0,453,75,1,0,0,0,454,463,5,1,0,0,455,460,3,66,
         33,0,456,457,5,3,0,0,457,459,3,66,33,0,458,456,1,0,0,0,459,462,1,
         0,0,0,460,458,1,0,0,0,460,461,1,0,0,0,461,464,1,0,0,0,462,460,1,
         0,0,0,463,455,1,0,0,0,463,464,1,0,0,0,464,465,1,0,0,0,465,466,5,
         5,0,0,466,77,1,0,0,0,467,469,5,11,0,0,468,467,1,0,0,0,468,469,1,
-        0,0,0,469,470,1,0,0,0,470,476,5,58,0,0,471,473,5,14,0,0,472,474,
+        0,0,0,469,470,1,0,0,0,470,476,5,57,0,0,471,473,5,14,0,0,472,474,
         5,11,0,0,473,472,1,0,0,0,473,474,1,0,0,0,474,475,1,0,0,0,475,477,
-        5,58,0,0,476,471,1,0,0,0,476,477,1,0,0,0,477,79,1,0,0,0,55,88,91,
+        5,57,0,0,476,471,1,0,0,0,476,477,1,0,0,0,477,79,1,0,0,0,55,88,91,
         94,97,102,105,108,111,117,123,135,143,150,161,168,187,194,198,200,
         205,219,225,232,241,250,256,265,269,279,286,290,296,298,307,335,
         345,354,364,372,378,386,393,401,415,419,426,435,439,445,452,460,
@@ -203,7 +203,7 @@ class pascalParser ( Parser ):
                      "'div'", "'do'", "'downto'", "'else'", "'end'", "'for'", 
                      "'function'", "'if'", "'in'", "'mod'", "'nil'", "'not'", 
                      "'of'", "'or'", "'procedure'", "'program'", "'record'", 
-                     "'repeat'", "'set'", "'then'", "'to'", "'type'", "'until'", 
+                     "'repeat'", "'then'", "'to'", "'type'", "'until'", 
                      "'var'", "'while'", "'integer'", "'real'", "'boolean'", 
                      "'string'", "<INVALID>", "'<'", "'>'", "'<='", "'>='", 
                      "'='", "'<>'", "':='", "'.'" ]
@@ -216,12 +216,11 @@ class pascalParser ( Parser ):
                       "KW_DOWNTO", "KW_ELSE", "KW_END", "KW_FOR", "KW_FUNCTION", 
                       "KW_IF", "KW_IN", "KW_MOD", "KW_NIL", "KW_NOT", "KW_OF", 
                       "KW_OR", "KW_PROCEDURE", "KW_PROGRAM", "KW_RECORD", 
-                      "KW_REPEAT", "KW_SET", "KW_THEN", "KW_TO", "KW_TYPE", 
-                      "KW_UNTIL", "KW_VAR", "KW_WHILE", "KW_INTEGER", "KW_REAL", 
-                      "KW_BOOLEAN", "KW_STRING", "LOGIC_LITERAL", "LT", 
-                      "GT", "LE", "GE", "EQ", "NE", "ASSIGN", "DOT", "NUMBER", 
-                      "STRING", "WS", "COMMENT", "OTHER_COMMENT", "LINE_COMMENT", 
-                      "IDENTIFIER" ]
+                      "KW_REPEAT", "KW_THEN", "KW_TO", "KW_TYPE", "KW_UNTIL", 
+                      "KW_VAR", "KW_WHILE", "KW_INTEGER", "KW_REAL", "KW_BOOLEAN", 
+                      "KW_STRING", "LOGIC_LITERAL", "LT", "GT", "LE", "GE", 
+                      "EQ", "NE", "ASSIGN", "DOT", "NUMBER", "STRING", "WS", 
+                      "COMMENT", "OTHER_COMMENT", "LINE_COMMENT", "IDENTIFIER" ]
 
     RULE_program = 0
     RULE_program_header = 1
@@ -313,33 +312,32 @@ class pascalParser ( Parser ):
     KW_PROGRAM=35
     KW_RECORD=36
     KW_REPEAT=37
-    KW_SET=38
-    KW_THEN=39
-    KW_TO=40
-    KW_TYPE=41
-    KW_UNTIL=42
-    KW_VAR=43
-    KW_WHILE=44
-    KW_INTEGER=45
-    KW_REAL=46
-    KW_BOOLEAN=47
-    KW_STRING=48
-    LOGIC_LITERAL=49
-    LT=50
-    GT=51
-    LE=52
-    GE=53
-    EQ=54
-    NE=55
-    ASSIGN=56
-    DOT=57
-    NUMBER=58
-    STRING=59
-    WS=60
-    COMMENT=61
-    OTHER_COMMENT=62
-    LINE_COMMENT=63
-    IDENTIFIER=64
+    KW_THEN=38
+    KW_TO=39
+    KW_TYPE=40
+    KW_UNTIL=41
+    KW_VAR=42
+    KW_WHILE=43
+    KW_INTEGER=44
+    KW_REAL=45
+    KW_BOOLEAN=46
+    KW_STRING=47
+    LOGIC_LITERAL=48
+    LT=49
+    GT=50
+    LE=51
+    GE=52
+    EQ=53
+    NE=54
+    ASSIGN=55
+    DOT=56
+    NUMBER=57
+    STRING=58
+    WS=59
+    COMMENT=60
+    OTHER_COMMENT=61
+    LINE_COMMENT=62
+    IDENTIFIER=63
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -378,6 +376,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -426,6 +430,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitProgram_header" ):
                 listener.exitProgram_header(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram_header" ):
+                return visitor.visitProgram_header(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -520,6 +530,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitDeclarations" ):
                 listener.exitDeclarations(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDeclarations" ):
+                return visitor.visitDeclarations(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -533,7 +549,7 @@ class pascalParser ( Parser ):
             self.state = 102
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==41:
+            if _la==40:
                 self.state = 101
                 self.type_declarations()
 
@@ -549,7 +565,7 @@ class pascalParser ( Parser ):
             self.state = 108
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==43:
+            if _la==42:
                 self.state = 107
                 self.var_declarations()
 
@@ -599,6 +615,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitType_declarations" ):
                 listener.exitType_declarations(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitType_declarations" ):
+                return visitor.visitType_declarations(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -620,7 +642,7 @@ class pascalParser ( Parser ):
                 self.state = 117 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==64):
+                if not (_la==63):
                     break
 
         except RecognitionException as re:
@@ -664,6 +686,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitType_decl" ):
                 listener.exitType_decl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitType_decl" ):
+                return visitor.visitType_decl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -680,7 +708,7 @@ class pascalParser ( Parser ):
             self.state = 123
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [16, 45, 46, 47, 48, 64]:
+            if token in [16, 44, 45, 46, 47, 63]:
                 self.state = 121
                 self.type_spec()
                 pass
@@ -739,6 +767,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitRecord_spec" ):
                 listener.exitRecord_spec(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRecord_spec" ):
+                return visitor.visitRecord_spec(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -766,7 +800,7 @@ class pascalParser ( Parser ):
                 self.state = 135 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==64):
+                if not (_la==63):
                     break
 
             self.state = 137
@@ -808,6 +842,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitConst_declarations" ):
                 listener.exitConst_declarations(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConst_declarations" ):
+                return visitor.visitConst_declarations(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -829,7 +869,7 @@ class pascalParser ( Parser ):
                 self.state = 143 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==64):
+                if not (_la==63):
                     break
 
         except RecognitionException as re:
@@ -871,6 +911,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitConst_decl" ):
                 listener.exitConst_decl(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConst_decl" ):
+                return visitor.visitConst_decl(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -939,6 +985,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitVar_declarations" ):
                 listener.exitVar_declarations(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVar_declarations" ):
+                return visitor.visitVar_declarations(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -960,7 +1012,7 @@ class pascalParser ( Parser ):
                 self.state = 161 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==64):
+                if not (_la==63):
                     break
 
         except RecognitionException as re:
@@ -999,6 +1051,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitVar_decl" ):
                 listener.exitVar_decl(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVar_decl" ):
+                return visitor.visitVar_decl(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1089,6 +1147,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitType_spec" ):
                 listener.exitType_spec(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitType_spec" ):
+                return visitor.visitType_spec(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1101,27 +1165,27 @@ class pascalParser ( Parser ):
             self.state = 194
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [45]:
+            if token in [44]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 175
                 self.match(pascalParser.KW_INTEGER)
                 pass
-            elif token in [46]:
+            elif token in [45]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 176
                 self.match(pascalParser.KW_REAL)
                 pass
-            elif token in [47]:
+            elif token in [46]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 177
                 self.match(pascalParser.KW_BOOLEAN)
                 pass
-            elif token in [48]:
+            elif token in [47]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 178
                 self.match(pascalParser.KW_STRING)
                 pass
-            elif token in [64]:
+            elif token in [63]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 179
                 self.match(pascalParser.IDENTIFIER)
@@ -1196,6 +1260,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFunc_and_proc_declarations" ):
                 listener.exitFunc_and_proc_declarations(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunc_and_proc_declarations" ):
+                return visitor.visitFunc_and_proc_declarations(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1276,6 +1346,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitFunc_declaration" ):
                 listener.exitFunc_declaration(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunc_declaration" ):
+                return visitor.visitFunc_declaration(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1341,6 +1417,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitFunc_arguments" ):
                 listener.exitFunc_arguments(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunc_arguments" ):
+                return visitor.visitFunc_arguments(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1410,6 +1492,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitFunc_argument_grp" ):
                 listener.exitFunc_argument_grp(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunc_argument_grp" ):
+                return visitor.visitFunc_argument_grp(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1423,7 +1511,7 @@ class pascalParser ( Parser ):
             self.state = 225
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==43:
+            if _la==42:
                 self.state = 224
                 self.match(pascalParser.KW_VAR)
 
@@ -1486,6 +1574,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitProc_declaration" ):
                 listener.exitProc_declaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProc_declaration" ):
+                return visitor.visitProc_declaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1556,6 +1650,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitBlock" ):
                 listener.exitBlock(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBlock" ):
+                return visitor.visitBlock(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1573,7 +1673,7 @@ class pascalParser ( Parser ):
             self.state = 250
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 17)) & ~0x3f) == 0 and ((1 << (_la - 17)) & 140737623622915) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -9223363103154634752) != 0):
                 self.state = 249
                 self.statement_list()
 
@@ -1617,6 +1717,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitCode_block" ):
                 listener.exitCode_block(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCode_block" ):
+                return visitor.visitCode_block(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1632,7 +1738,7 @@ class pascalParser ( Parser ):
             self.state = 256
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 17)) & ~0x3f) == 0 and ((1 << (_la - 17)) & 140737623622915) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -9223363103154634752) != 0):
                 self.state = 255
                 self.statement_list()
 
@@ -1672,6 +1778,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatement_list" ):
                 listener.exitStatement_list(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatement_list" ):
+                return visitor.visitStatement_list(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1764,6 +1876,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitStatement" ):
                 listener.exitStatement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatement" ):
+                return visitor.visitStatement(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1879,6 +1997,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitCase_statement" ):
                 listener.exitCase_statement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCase_statement" ):
+                return visitor.visitCase_statement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1898,7 +2022,7 @@ class pascalParser ( Parser ):
             self.state = 290
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 58)) & ~0x3f) == 0 and ((1 << (_la - 58)) & 67) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & -8791026472627208192) != 0):
                 self.state = 284
                 self.case_branch()
                 self.state = 286
@@ -1971,6 +2095,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitCase_branch" ):
                 listener.exitCase_branch(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCase_branch" ):
+                return visitor.visitCase_branch(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2035,6 +2165,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitCase_label" ):
                 listener.exitCase_label(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCase_label" ):
+                return visitor.visitCase_label(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2047,7 +2183,7 @@ class pascalParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 313
             _la = self._input.LA(1)
-            if not(((((_la - 58)) & ~0x3f) == 0 and ((1 << (_la - 58)) & 67) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & -8791026472627208192) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -2108,6 +2244,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitFor_loop" ):
                 listener.exitFor_loop(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFor_loop" ):
+                return visitor.visitFor_loop(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2128,7 +2270,7 @@ class pascalParser ( Parser ):
             self.expression()
             self.state = 319
             _la = self._input.LA(1)
-            if not(_la==22 or _la==40):
+            if not(_la==22 or _la==39):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -2179,6 +2321,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitRepeat_loop" ):
                 listener.exitRepeat_loop(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRepeat_loop" ):
+                return visitor.visitRepeat_loop(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2243,6 +2391,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIf_block" ):
                 listener.exitIf_block(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIf_block" ):
+                return visitor.visitIf_block(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2312,6 +2466,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitWhile_loop" ):
                 listener.exitWhile_loop(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWhile_loop" ):
+                return visitor.visitWhile_loop(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2363,6 +2523,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitFunction_call" ):
                 listener.exitFunction_call(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunction_call" ):
+                return visitor.visitFunction_call(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2380,7 +2546,7 @@ class pascalParser ( Parser ):
             self.state = 345
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & -8790744997113625087) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -8790744996576752638) != 0):
                 self.state = 344
                 self.arg_list()
 
@@ -2420,6 +2586,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArg_list" ):
                 listener.exitArg_list(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArg_list" ):
+                return visitor.visitArg_list(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2476,6 +2648,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitLogic_expression" ):
                 listener.exitLogic_expression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLogic_expression" ):
+                return visitor.visitLogic_expression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2526,6 +2704,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitOrExpr" ):
                 listener.exitOrExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOrExpr" ):
+                return visitor.visitOrExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2590,6 +2774,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAndExpr" ):
                 listener.exitAndExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAndExpr" ):
+                return visitor.visitAndExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2674,6 +2864,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitRelation" ):
                 listener.exitRelation(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRelation" ):
+                return visitor.visitRelation(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2693,10 +2889,10 @@ class pascalParser ( Parser ):
                 self.state = 378
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 70931694131085312) != 0):
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 35465847065542656) != 0):
                     self.state = 376
                     _la = self._input.LA(1)
-                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 70931694131085312) != 0)):
+                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 35465847065542656) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -2759,6 +2955,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpression" ):
                 listener.exitExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpression" ):
+                return visitor.visitExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2834,6 +3036,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTerm" ):
                 listener.exitTerm(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTerm" ):
+                return visitor.visitTerm(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -2922,6 +3130,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitFactor" ):
                 listener.exitFactor(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFactor" ):
+                return visitor.visitFactor(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -2966,7 +3180,7 @@ class pascalParser ( Parser ):
                 self.state = 419
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==8 or _la==57:
+                while _la==8 or _la==56:
                     self.state = 415
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
@@ -2978,7 +3192,7 @@ class pascalParser ( Parser ):
                         self.state = 411
                         self.match(pascalParser.T__8)
                         pass
-                    elif token in [57]:
+                    elif token in [56]:
                         self.state = 413
                         self.match(pascalParser.DOT)
                         self.state = 414
@@ -3057,6 +3271,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitAssignment" ):
                 listener.exitAssignment(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignment" ):
+                return visitor.visitAssignment(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3072,7 +3292,7 @@ class pascalParser ( Parser ):
             self.state = 439
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==8 or _la==57:
+            while _la==8 or _la==56:
                 self.state = 435
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
@@ -3084,7 +3304,7 @@ class pascalParser ( Parser ):
                     self.state = 431
                     self.match(pascalParser.T__8)
                     pass
-                elif token in [57]:
+                elif token in [56]:
                     self.state = 433
                     self.match(pascalParser.DOT)
                     self.state = 434
@@ -3156,6 +3376,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitLiteral" ):
                 listener.exitLiteral(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLiteral" ):
+                return visitor.visitLiteral(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3167,17 +3393,17 @@ class pascalParser ( Parser ):
             self.state = 452
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [58]:
+            if token in [57]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 447
                 self.match(pascalParser.NUMBER)
                 pass
-            elif token in [59]:
+            elif token in [58]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 448
                 self.match(pascalParser.STRING)
                 pass
-            elif token in [49]:
+            elif token in [48]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 449
                 self.match(pascalParser.LOGIC_LITERAL)
@@ -3229,6 +3455,12 @@ class pascalParser ( Parser ):
             if hasattr( listener, "exitArray_literal" ):
                 listener.exitArray_literal(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArray_literal" ):
+                return visitor.visitArray_literal(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -3244,7 +3476,7 @@ class pascalParser ( Parser ):
             self.state = 463
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & -8790744997113625087) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & -8790744996576752638) != 0):
                 self.state = 455
                 self.expression()
                 self.state = 460
@@ -3295,6 +3527,12 @@ class pascalParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArray_index_type" ):
                 listener.exitArray_index_type(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArray_index_type" ):
+                return visitor.visitArray_index_type(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 

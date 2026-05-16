@@ -1,7 +1,7 @@
 from antlr4 import *
 from antlr.pascalLexer import pascalLexer
 from antlr.pascalParser import pascalParser
-
+from antlr.pascalVisitor import pascalVisitor
 from helper.functions import print_tree
 
 for i in range(1, 18):
@@ -17,5 +17,12 @@ for i in range(1, 18):
     parser = pascalParser(stream)
 
     tree = parser.program()
+    
+    out_filename = "test.c"
+    with open(out_filename, "w") as out_file:
+        visitor = pascalVisitor(out_file)
+        tree.accept(visitor)
+    
+
     print(tree.toStringTree(recog=parser))
 # print_tree(tree, parser)
