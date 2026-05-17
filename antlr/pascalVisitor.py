@@ -107,7 +107,7 @@ class pascalVisitor(ParseTreeVisitor):
     def visitCode_block(self, ctx:pascalParser.Code_blockContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "begin":
-                self.file.write("{")
+                self.file.write("{\n")
                 continue       
             if child.getText().lower() == "end":
                 self.file.write("}")
@@ -123,7 +123,7 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#statement.
     def visitStatement(self, ctx:pascalParser.StatementContext):
         self.visit(ctx.getChild(0))
-        if ctx.code_block() is None:
+        if ctx.function_call() is not None or ctx.assignment() is not None:
             self.file.write(";")
         self.file.write("\n")
 
@@ -150,7 +150,16 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#repeat_loop.
     def visitRepeat_loop(self, ctx:pascalParser.Repeat_loopContext):
-        return self.visitChildren(ctx)
+        for i, child in enumerate(ctx.getChildren()):
+            if child.getText().lower() == "repeat":
+                self.file.write("do{\n")
+                continue       
+            if child.getText().lower() == "until":
+                self.file.write("}while(")
+                continue
+            self.visit(child)
+        self.file.write(");")
+
 
 
     # Visit a parse tree produced by pascalParser#if_block.
@@ -170,7 +179,14 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#while_loop.
     def visitWhile_loop(self, ctx:pascalParser.While_loopContext):
-        return self.visitChildren(ctx)
+        for i, child in enumerate(ctx.getChildren()):
+            if child.getText().lower() == "while":
+                self.file.write("while(")
+                continue       
+            if child.getText().lower() == "do":
+                self.file.write(")")
+                continue
+            self.visit(child)
 
 
     # Visit a parse tree produced by pascalParser#function_call.
@@ -287,6 +303,10 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#assignment.
     def visitAssignment(self, ctx:pascalParser.AssignmentContext):
         # self.file.write(ctx.IDENTIFIER(0).getText())
+        if ctx.IDENTIFIER(0).getText().lower() == "result":
+            self.file.write("return ")
+            self.visit(ctx.getChild(2)) # 1st is identifier 2nd is assign
+            return
         for i, child in enumerate(ctx.getChildren()):
             if child.getText() in "[].":
                 self.file.write(child.getText())
