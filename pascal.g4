@@ -54,7 +54,7 @@ case_label : NUMBER
 
 for_loop : KW_FOR IDENTIFIER ASSIGN expression (KW_TO | KW_DOWNTO) expression KW_DO statement;
 
-repeat_loop : KW_REPEAT statement_list KW_UNTIL expression;
+repeat_loop : KW_REPEAT statement_list KW_UNTIL logic_expression;
 
 if_block : KW_IF logic_expression KW_THEN statement (KW_ELSE statement)?;
 
