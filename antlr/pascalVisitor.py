@@ -145,8 +145,25 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#for_loop.
     def visitFor_loop(self, ctx:pascalParser.For_loopContext):
-        return self.visitChildren(ctx)
+            self.file.write("for(int ")
+            var_name = ctx.getChild(1).getText()
+            self.file.write(f"{var_name} = ")
+            self.visit(ctx.getChild(3))
+            self.file.write("; ")
+            if ctx.KW_TO() is not None:
+                self.file.write(f"{var_name} <= ")
+                self.visit(ctx.getChild(5))
+                self.file.write("; ")
+                self.file.write(f"{var_name}++")
 
+            if ctx.KW_DOWNTO() is not None:
+                self.file.write(f"{var_name} >= ")
+                self.visit(ctx.getChild(5))
+                self.file.write("; ")
+                self.file.write(f"{var_name}--")
+            
+            self.file.write(")")
+            self.visit(ctx.getChild(7))
 
     # Visit a parse tree produced by pascalParser#repeat_loop.
     def visitRepeat_loop(self, ctx:pascalParser.Repeat_loopContext):
