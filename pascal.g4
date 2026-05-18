@@ -73,10 +73,11 @@ relation : expression ((EQ | NE | LT | LE | GT | GE) expression)?
 expression : term (('+' | '-') term)* ;
 term : factor (('*' | '/' | KW_DIV | KW_MOD) factor)* ;
 factor : ('+'|'-') factor 
+    | '(' expression ')'
     | literal
     | function_call
     | IDENTIFIER (('[' expression ']' | '.' IDENTIFIER))*
-    | '(' expression ')';
+    ;
 
 assignment : IDENTIFIER (('[' expression ']' | '.' IDENTIFIER))* ASSIGN (expression | logic_expression);
 
