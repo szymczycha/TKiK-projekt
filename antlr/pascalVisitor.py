@@ -355,7 +355,18 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#array_literal.
     def visitArray_literal(self, ctx:pascalParser.Array_literalContext):
-        return self.visitChildren(ctx)
+        for i, child in ctx.getChildren():
+            if child.getText() == ",":
+                self.file.write(",")
+                continue
+            if child.getText() == "(":
+                self.file.write("[")
+                continue
+            if child.getText() == ")":
+                self.file.write("]")
+                continue
+            self.visit(child)
+            
 
 
     # Visit a parse tree produced by pascalParser#array_index_type.
