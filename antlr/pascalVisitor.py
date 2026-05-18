@@ -130,17 +130,38 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#case_statement.
     def visitCase_statement(self, ctx:pascalParser.Case_statementContext):
-        return self.visitChildren(ctx)
+        for i, child in enumerate(ctx.getChildren()):
+            if child.getText().lower() == "case":
+                self.file.write("switch(")
+                continue       
+            if child.getText().lower() == "of":
+                self.file.write(") {\n")
+                continue       
+            if child.getText().lower() == "else":
+                self.file.write("default: ")
+                continue
+            if child.getText().lower() == "end":
+                self.file.write("}")
+                continue
+            self.visit(child)
 
 
     # Visit a parse tree produced by pascalParser#case_branch.
     def visitCase_branch(self, ctx:pascalParser.Case_branchContext):
-        return self.visitChildren(ctx)
+        for i, child in enumerate(ctx.getChildren()):
+            if ctx.case_label(i) is not None:
+                self.file.write("case ")
+                self.visit(child)
+                self.file.write(":\n")
+                continue       
+            self.visit(child)
+        self.file.write("break;\n")
+
 
 
     # Visit a parse tree produced by pascalParser#case_label.
     def visitCase_label(self, ctx:pascalParser.Case_labelContext):
-        return self.visitChildren(ctx)
+        self.file.write(ctx.getText())
 
 
     # Visit a parse tree produced by pascalParser#for_loop.
