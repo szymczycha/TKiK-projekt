@@ -4,13 +4,16 @@ if "." in __name__:
     from .pascalParser import pascalParser
 else:
     from pascalParser import pascalParser
-
+from antlr.pascalParser import pascalParser as pascalP
+from antlr.pascalLexer import pascalLexer
 # This class defines a complete generic visitor for a parse tree produced by pascalParser.
 
 class pascalVisitor(ParseTreeVisitor):
     
     def __init__(self, file):
         self.file = file
+        self.declared_variables = dict()
+        self.declared_constants = dict()
         super().__init__()
 
     # Visit a parse tree produced by pascalParser#program.
@@ -65,7 +68,27 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#var_decl.
     def visitVar_decl(self, ctx:pascalParser.Var_declContext):
-        return self.visitChildren(ctx)
+        variable_names = [id.getText() for id in ctx.IDENTIFIER()]
+        variable_type = None
+        if ctx.type_spec().KW_INTEGER() is not None:
+            variable_type = "int"
+        if ctx.type_spec().KW_REAL() is not None:
+            variable_type = "double"
+        if ctx.type_spec().KW_STRING() is not None:
+            variable_type = "char[]"#?
+        if ctx.type_spec().KW_BOOLEAN() is not None:
+            variable_type = "bool"
+        if ctx.type_spec().IDENTIFIER() is not None:
+            print("DECLARING RECORD TYPES NOT IMPLEMENTED")
+        if ctx.type_spec().KW_ARRAY() is not None: 
+            print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
+        print(variable_names)
+        print(variable_type)
+        for var_name in variable_names:
+            self.declared_variables[var_name] = variable_type
+            self.file.write(f"{variable_type} {var_name};\n")
+
+        print(self.declared_variables)
 
 
     # Visit a parse tree produced by pascalParser#type_spec.
@@ -149,7 +172,7 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#case_branch.
     def visitCase_branch(self, ctx:pascalParser.Case_branchContext):
         for i, child in enumerate(ctx.getChildren()):
-            if ctx.case_label(i) is not None:
+            if isinstance(child, pascalP.Case_labelContext):
                 self.file.write("case ")
                 self.visit(child)
                 self.file.write(":\n")
@@ -257,7 +280,7 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#orExpr.
     def visitOrExpr(self, ctx:pascalParser.OrExprContext):
         for i, child in enumerate(ctx.getChildren()):
-            if ctx.KW_OR(i) is not None:
+            if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.KW_OR:
                 self.file.write(child.getText())
                 continue
             self.visit(child)
@@ -266,7 +289,7 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#andExpr.
     def visitAndExpr(self, ctx:pascalParser.AndExprContext):
         for i, child in enumerate(ctx.getChildren()):
-            if ctx.KW_AND(i) is not None:
+            if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.KW_AND:
                 self.file.write(child.getText())
                 continue
             self.visit(child)
@@ -314,15 +337,17 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#term.
     def visitTerm(self, ctx:pascalParser.TermContext):
         for i, child in enumerate(ctx.getChildren()):
+            # print(i, child.getText())
             if child.getText() in "*/":
                 self.file.write(child.getText())
                 continue
-            if ctx.KW_DIV(i) is not None:
-                self.file.write(child.getText())
+            if child.getText().lower() == "div":
+                self.file.write("/")
                 continue       
-            if ctx.KW_MOD(i) is not None:
-                self.file.write(child.getText())
+            if child.getText().lower() == "mod":
+                self.file.write("%")
                 continue       
+            # self.file.write(child.getText())
             self.visit(child)
 
 
@@ -332,7 +357,7 @@ class pascalVisitor(ParseTreeVisitor):
             if child.getText() in "+-[].":
                 self.file.write(child.getText())
                 continue
-            if ctx.IDENTIFIER(i) is not None:
+            if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.IDENTIFIER:
                 self.file.write(child.getText())
                 continue       
             self.visit(child)
@@ -349,12 +374,12 @@ class pascalVisitor(ParseTreeVisitor):
             if child.getText() in "[].":
                 self.file.write(child.getText())
                 continue
-            if ctx.IDENTIFIER(i) is not None:
-                self.file.write(child.getText())
-                continue
             if child.getText() == ":=":
                 self.file.write("=")
                 continue            
+            if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.IDENTIFIER:
+                self.file.write(child.getText())
+                continue
             self.visit(child)
 
 
@@ -376,7 +401,7 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#array_literal.
     def visitArray_literal(self, ctx:pascalParser.Array_literalContext):
-        for i, child in ctx.getChildren():
+        for child in ctx.getChildren():
             if child.getText() == ",":
                 self.file.write(",")
                 continue
