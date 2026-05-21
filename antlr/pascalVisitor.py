@@ -14,15 +14,28 @@ class pascalVisitor(ParseTreeVisitor):
         self.file = file
         self.declared_variables = dict()
         self.declared_constants = dict()
+        self.ind_count = 0
+        self.add_indent = True
+        self.indent = "    "
         super().__init__()
+
+    def write_to_file(self, text):
+        self.file.write(f"{self.ind_count * self.indent if self.add_indent else ""}{text}")
+        if self.add_indent:
+            self.add_indent = False
+        if "\n" in text:
+            self.add_indent = True
 
     # Visit a parse tree produced by pascalParser#program.
     def visitProgram(self, ctx:pascalParser.ProgramContext):
-        self.file.write("#include <stdio.h>\n")
+        self.write_to_file("#include <stdio.h>\n")
         self.visit(ctx.getChild(0))
-        self.file.write("int main(){\n")
-        self.visit(ctx.getChild(1))
-        self.file.write("}")
+        self.visit(ctx.block().declarations())
+        self.write_to_file("int main(){\n")
+        self.ind_count += 1
+        self.visit(ctx.block().statement_list())
+        self.ind_count -= 1
+        self.write_to_file("}")
         # return self.visitChildren(ctx)
 
 
@@ -86,7 +99,7 @@ class pascalVisitor(ParseTreeVisitor):
         print(variable_type)
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
-            self.file.write(f"{variable_type} {var_name};\n")
+            self.write_to_file(f"{variable_type} {var_name};\n")
 
         print(self.declared_variables)
 
@@ -123,17 +136,21 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#block.
     def visitBlock(self, ctx:pascalParser.BlockContext):
-        return self.visitChildren(ctx)
+        self.ind_count += 1
+        self.visitChildren(ctx)
+        self.ind_count -= 1
 
 
     # Visit a parse tree produced by pascalParser#code_block.
     def visitCode_block(self, ctx:pascalParser.Code_blockContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "begin":
-                self.file.write("{\n")
+                self.write_to_file("{\n")
+                self.ind_count += 1
                 continue       
             if child.getText().lower() == "end":
-                self.file.write("}")
+                self.ind_count -= 1
+                self.write_to_file("}")
                 continue       
             self.visit(child)
 
@@ -147,24 +164,26 @@ class pascalVisitor(ParseTreeVisitor):
     def visitStatement(self, ctx:pascalParser.StatementContext):
         self.visit(ctx.getChild(0))
         if ctx.function_call() is not None or ctx.assignment() is not None:
-            self.file.write(";")
-        self.file.write("\n")
+            self.write_to_file(";")
+        self.write_to_file("\n")
 
 
     # Visit a parse tree produced by pascalParser#case_statement.
     def visitCase_statement(self, ctx:pascalParser.Case_statementContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "case":
-                self.file.write("switch(")
+                self.write_to_file("switch(")
+                self.ind_count += 1
                 continue       
             if child.getText().lower() == "of":
-                self.file.write(") {\n")
+                self.write_to_file(") {\n")
                 continue       
             if child.getText().lower() == "else":
-                self.file.write("default: ")
+                self.write_to_file("default: ")
                 continue
             if child.getText().lower() == "end":
-                self.file.write("}")
+                self.ind_count -= 1
+                self.write_to_file("}")
                 continue
             self.visit(child)
 
@@ -173,53 +192,58 @@ class pascalVisitor(ParseTreeVisitor):
     def visitCase_branch(self, ctx:pascalParser.Case_branchContext):
         for i, child in enumerate(ctx.getChildren()):
             if isinstance(child, pascalP.Case_labelContext):
-                self.file.write("case ")
+                self.write_to_file("case ")
                 self.visit(child)
-                self.file.write(":\n")
-                continue       
+                self.write_to_file(":\n")
+                continue     
+            if child.getText() == ":":
+                self.ind_count += 1
+                continue  
             self.visit(child)
-        self.file.write("break;\n")
+        self.write_to_file("break;\n")
+        self.ind_count -= 1
+
 
 
 
     # Visit a parse tree produced by pascalParser#case_label.
     def visitCase_label(self, ctx:pascalParser.Case_labelContext):
-        self.file.write(ctx.getText())
+        self.write_to_file(ctx.getText())
 
 
     # Visit a parse tree produced by pascalParser#for_loop.
     def visitFor_loop(self, ctx:pascalParser.For_loopContext):
-            self.file.write("for(int ")
+            self.write_to_file("for(int ")
             var_name = ctx.getChild(1).getText()
-            self.file.write(f"{var_name} = ")
+            self.write_to_file(f"{var_name} = ")
             self.visit(ctx.getChild(3))
-            self.file.write("; ")
+            self.write_to_file("; ")
             if ctx.KW_TO() is not None:
-                self.file.write(f"{var_name} <= ")
+                self.write_to_file(f"{var_name} <= ")
                 self.visit(ctx.getChild(5))
-                self.file.write("; ")
-                self.file.write(f"{var_name}++")
+                self.write_to_file("; ")
+                self.write_to_file(f"{var_name}++")
 
             if ctx.KW_DOWNTO() is not None:
-                self.file.write(f"{var_name} >= ")
+                self.write_to_file(f"{var_name} >= ")
                 self.visit(ctx.getChild(5))
-                self.file.write("; ")
-                self.file.write(f"{var_name}--")
+                self.write_to_file("; ")
+                self.write_to_file(f"{var_name}--")
             
-            self.file.write(")")
+            self.write_to_file(")")
             self.visit(ctx.getChild(7))
 
     # Visit a parse tree produced by pascalParser#repeat_loop.
     def visitRepeat_loop(self, ctx:pascalParser.Repeat_loopContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "repeat":
-                self.file.write("do{\n")
+                self.write_to_file("do{\n")
                 continue       
             if child.getText().lower() == "until":
-                self.file.write("}while(")
+                self.write_to_file("}while(")
                 continue
             self.visit(child)
-        self.file.write(");")
+        self.write_to_file(");")
 
 
 
@@ -227,13 +251,13 @@ class pascalVisitor(ParseTreeVisitor):
     def visitIf_block(self, ctx:pascalParser.If_blockContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "if":
-                self.file.write("if(")
+                self.write_to_file("if(")
                 continue       
             if child.getText().lower() == "then":
-                self.file.write(")")
+                self.write_to_file(")")
                 continue       
             if child.getText().lower() == "else":
-                self.file.write("else ")
+                self.write_to_file("else ")
                 continue       
             self.visit(child)
 
@@ -242,10 +266,10 @@ class pascalVisitor(ParseTreeVisitor):
     def visitWhile_loop(self, ctx:pascalParser.While_loopContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "while":
-                self.file.write("while(")
+                self.write_to_file("while(")
                 continue       
             if child.getText().lower() == "do":
-                self.file.write(")")
+                self.write_to_file(")")
                 continue
             self.visit(child)
 
@@ -256,9 +280,9 @@ class pascalVisitor(ParseTreeVisitor):
         function_name = ctx.IDENTIFIER().getText()
         if function_name == "writeLn":
             function_name = "printf"
-        self.file.write(f"{function_name}(")
+        self.write_to_file(f"{function_name}(")
         self.visit(ctx.arg_list())        
-        self.file.write(f")")
+        self.write_to_file(f")")
 
 
     # Visit a parse tree produced by pascalParser#arg_list.
@@ -266,7 +290,7 @@ class pascalVisitor(ParseTreeVisitor):
         # print(ctx.getChildren())
         for child in ctx.getChildren():
             if child.getText() == ',':
-                self.file.write(',')
+                self.write_to_file(',')
             else: 
                 self.visit(child)
         # return self.visitChildren(ctx)
@@ -281,7 +305,7 @@ class pascalVisitor(ParseTreeVisitor):
     def visitOrExpr(self, ctx:pascalParser.OrExprContext):
         for i, child in enumerate(ctx.getChildren()):
             if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.KW_OR:
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             self.visit(child)
 
@@ -290,7 +314,7 @@ class pascalVisitor(ParseTreeVisitor):
     def visitAndExpr(self, ctx:pascalParser.AndExprContext):
         for i, child in enumerate(ctx.getChildren()):
             if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.KW_AND:
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             self.visit(child)
 
@@ -299,28 +323,28 @@ class pascalVisitor(ParseTreeVisitor):
     def visitRelation(self, ctx:pascalParser.RelationContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText() in "()":
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             if child.getText() == "=":
-                self.file.write("==")
+                self.write_to_file("==")
                 continue       
             if child.getText() == "<>":
-                self.file.write("!=")
+                self.write_to_file("!=")
                 continue
             if child.getText() == "<":
-                self.file.write("<")
+                self.write_to_file("<")
                 continue       
             if child.getText() == "<=":
-                self.file.write("<=")
+                self.write_to_file("<=")
                 continue       
             if child.getText() == ">=":
-                self.file.write(">=")
+                self.write_to_file(">=")
                 continue       
             if child.getText() == ">":
-                self.file.write(">")
+                self.write_to_file(">")
                 continue       
             if child.getText().lower() == "not":
-                self.file.write("!")
+                self.write_to_file("!")
                 continue       
             self.visit(child)
 
@@ -329,7 +353,7 @@ class pascalVisitor(ParseTreeVisitor):
     def visitExpression(self, ctx:pascalParser.ExpressionContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText() in "+-":
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             self.visit(child)
 
@@ -339,15 +363,15 @@ class pascalVisitor(ParseTreeVisitor):
         for i, child in enumerate(ctx.getChildren()):
             # print(i, child.getText())
             if child.getText() in "*/":
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             if child.getText().lower() == "div":
-                self.file.write("/")
+                self.write_to_file("/")
                 continue       
             if child.getText().lower() == "mod":
-                self.file.write("%")
+                self.write_to_file("%")
                 continue       
-            # self.file.write(child.getText())
+            # self.write_to_file(child.getText())
             self.visit(child)
 
 
@@ -355,30 +379,30 @@ class pascalVisitor(ParseTreeVisitor):
     def visitFactor(self, ctx:pascalParser.FactorContext):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText() in "+-[].":
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.IDENTIFIER:
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue       
             self.visit(child)
 
 
     # Visit a parse tree produced by pascalParser#assignment.
     def visitAssignment(self, ctx:pascalParser.AssignmentContext):
-        # self.file.write(ctx.IDENTIFIER(0).getText())
+        # self.write_to_file(ctx.IDENTIFIER(0).getText())
         if ctx.IDENTIFIER(0).getText().lower() == "result":
-            self.file.write("return ")
+            self.write_to_file("return ")
             self.visit(ctx.getChild(2)) # 1st is identifier 2nd is assign
             return
         for i, child in enumerate(ctx.getChildren()):
             if child.getText() in "[].":
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             if child.getText() == ":=":
-                self.file.write("=")
+                self.write_to_file("=")
                 continue            
             if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.IDENTIFIER:
-                self.file.write(child.getText())
+                self.write_to_file(child.getText())
                 continue
             self.visit(child)
 
@@ -389,13 +413,13 @@ class pascalVisitor(ParseTreeVisitor):
             self.visit(ctx.array_literal())
             pass
         if ctx.NUMBER() is not None:
-            self.file.write(ctx.getText())
+            self.write_to_file(ctx.getText())
         if ctx.STRING() is not None:
-            self.file.write(ctx.getText())
+            self.write_to_file(ctx.getText())
         if ctx.LOGIC_LITERAL() is not None:
-            self.file.write(ctx.getText())
+            self.write_to_file(ctx.getText())
         if ctx.KW_NIL() is not None:
-            self.file.write("NULL")
+            self.write_to_file("NULL")
         # return self.visitChildren(ctx)
 
 
@@ -403,13 +427,13 @@ class pascalVisitor(ParseTreeVisitor):
     def visitArray_literal(self, ctx:pascalParser.Array_literalContext):
         for child in ctx.getChildren():
             if child.getText() == ",":
-                self.file.write(",")
+                self.write_to_file(",")
                 continue
             if child.getText() == "(":
-                self.file.write("[")
+                self.write_to_file("[")
                 continue
             if child.getText() == ")":
-                self.file.write("]")
+                self.write_to_file("]")
                 continue
             self.visit(child)
             
