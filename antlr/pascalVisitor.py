@@ -96,22 +96,31 @@ class pascalVisitor(ParseTreeVisitor):
     def visitVar_decl(self, ctx:pascalParser.Var_declContext):
         variable_names = [id.getText() for id in ctx.IDENTIFIER()]
         variable_type = None
+        indexes = ""
         if ctx.type_spec().KW_INTEGER() is not None:
             variable_type = "int"
         if ctx.type_spec().KW_REAL() is not None:
             variable_type = "double"
         if ctx.type_spec().KW_STRING() is not None:
-            variable_type = "char[]"#?
+            indexes += "[]" # TODO test bo nie wiem czy to zadziała
+            variable_type = "char"
         if ctx.type_spec().KW_BOOLEAN() is not None:
             variable_type = "bool"
         if ctx.type_spec().IDENTIFIER() is not None:
-            print("DECLARING RECORD TYPES NOT IMPLEMENTED")
+            print("DECLARING NAMED TYPES NOT IMPLEMENTED")
         if ctx.type_spec().KW_ARRAY() is not None: 
-            print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
+            # print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
+            array_type = self.translate_var_type(ctx.type_spec().type_spec().getText().lower())
+            array_max_size = ctx.type_spec().array_index_type(0).NUMBER()[-1] # only 1d arrays for now
+            for a_i_t in ctx.type_spec().array_index_type():
+                indexes += f"[{a_i_t.NUMBER()[-1]}]"
+            print("array_type:", array_type, array_max_size)
+            variable_type = f"{array_type}"
+
 
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
-            self.write_to_file(f"{variable_type} {var_name};\n")
+            self.write_to_file(f"{variable_type} {var_name}{indexes};\n")
 
 
     # Visit a parse tree produced by pascalParser#type_spec.
@@ -127,9 +136,7 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#func_declaration.
     def visitFunc_declaration(self, ctx:pascalParser.Func_declarationContext):
         result_type = ctx.type_spec().getText().lower()
-        print(result_type)
         result_type = self.translate_var_type(result_type)
-        print(result_type)
         self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
         self.visit(ctx.func_arguments())
         self.file.write("){\n")
@@ -312,8 +319,16 @@ class pascalVisitor(ParseTreeVisitor):
     def visitFunction_call(self, ctx:pascalParser.Function_callContext):
         # ctx.getToken(pascalParser.IDENTIFIER, 0)
         function_name = ctx.IDENTIFIER().getText()
-        if function_name == "writeLn":
+        if function_name.lower() == "writeln":
             function_name = "printf"
+        if function_name.lower() == "readln":
+            function_name = "scanf"
+            type_format_descriptor = "%i"
+            self.write_to_file(f"{function_name}(\"{type_format_descriptor}\", &")
+            var_name = ctx.arg_list().expression(0).getText()
+            self.visit(ctx.arg_list().expression(0))        
+            self.write_to_file(f")")
+            return
         self.write_to_file(f"{function_name}(")
         self.visit(ctx.arg_list())        
         self.write_to_file(f")")
@@ -448,7 +463,7 @@ class pascalVisitor(ParseTreeVisitor):
         if ctx.NUMBER() is not None:
             self.write_to_file(ctx.getText())
         if ctx.STRING() is not None:
-            self.write_to_file(ctx.getText())
+            self.write_to_file(ctx.getText().replace("'", '"'))
         if ctx.LOGIC_LITERAL() is not None:
             self.write_to_file(ctx.getText())
         if ctx.KW_NIL() is not None:
@@ -463,10 +478,10 @@ class pascalVisitor(ParseTreeVisitor):
                 self.write_to_file(",")
                 continue
             if child.getText() == "(":
-                self.write_to_file("[")
+                self.write_to_file("{")
                 continue
             if child.getText() == ")":
-                self.write_to_file("]")
+                self.write_to_file("}")
                 continue
             self.visit(child)
             

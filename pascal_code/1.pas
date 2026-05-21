@@ -1,4 +1,6 @@
   program Test1;
+  var
+    a,b,c: integer
   begin
     a := 10;
     b := 20;
