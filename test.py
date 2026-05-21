@@ -23,4 +23,4 @@ for i in range(1, 18):
         visitor = pascalVisitor(out_file)
         tree.accept(visitor)
         
-    print(tree.toStringTree(recog=parser))
+    # print(tree.toStringTree(recog=parser))

@@ -19,6 +19,19 @@ class pascalVisitor(ParseTreeVisitor):
         self.indent = "    "
         super().__init__()
 
+    def translate_var_type(self, result_type):
+        if result_type == None:
+            result_type = "void"
+        elif result_type == "integer":
+            result_type = "int"
+        elif result_type == "boolean":
+            result_type = "bool"
+        elif result_type == "string":
+            result_type = "char[]"
+        elif result_type == "real":
+            result_type = "double"
+        return result_type
+
     def write_to_file(self, text):
         self.file.write(f"{self.ind_count * self.indent if self.add_indent else ""}{text}")
         if self.add_indent:
@@ -95,13 +108,10 @@ class pascalVisitor(ParseTreeVisitor):
             print("DECLARING RECORD TYPES NOT IMPLEMENTED")
         if ctx.type_spec().KW_ARRAY() is not None: 
             print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
-        print(variable_names)
-        print(variable_type)
+
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
             self.write_to_file(f"{variable_type} {var_name};\n")
-
-        print(self.declared_variables)
 
 
     # Visit a parse tree produced by pascalParser#type_spec.
@@ -116,22 +126,44 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#func_declaration.
     def visitFunc_declaration(self, ctx:pascalParser.Func_declarationContext):
-        return self.visitChildren(ctx)
-
+        result_type = ctx.type_spec().getText().lower()
+        print(result_type)
+        result_type = self.translate_var_type(result_type)
+        print(result_type)
+        self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
+        self.visit(ctx.func_arguments())
+        self.file.write("){\n")
+        self.visit(ctx.block())
+        self.file.write("}\n")
 
     # Visit a parse tree produced by pascalParser#func_arguments.
     def visitFunc_arguments(self, ctx:pascalParser.Func_argumentsContext):
-        return self.visitChildren(ctx)
+        for i, func_arg_grp in enumerate(ctx.func_argument_grp()):
+            self.visit(func_arg_grp)
+            if i != len(ctx.func_argument_grp())-1:
+                self.file.write(",")
 
 
     # Visit a parse tree produced by pascalParser#func_argument_grp.
     def visitFunc_argument_grp(self, ctx:pascalParser.Func_argument_grpContext):
-        return self.visitChildren(ctx)
-
+        var_type = self.translate_var_type(ctx.type_spec().getText().lower())
+        for i, id in enumerate(ctx.IDENTIFIER()):
+            self.file.write(f"{var_type} {id.getText()}")
+            if i != len(ctx.IDENTIFIER())-1:
+                self.file.write(",")
 
     # Visit a parse tree produced by pascalParser#proc_declaration.
     def visitProc_declaration(self, ctx:pascalParser.Proc_declarationContext):
-        return self.visitChildren(ctx)
+        result_type = None
+        # print(result_type)
+        result_type = self.translate_var_type(result_type)
+        # print(result_type)
+        self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
+        self.visit(ctx.func_arguments())
+        self.file.write("){\n")
+        self.visit(ctx.block())
+        self.file.write("}\n")
+
 
 
     # Visit a parse tree produced by pascalParser#block.
@@ -238,8 +270,10 @@ class pascalVisitor(ParseTreeVisitor):
         for i, child in enumerate(ctx.getChildren()):
             if child.getText().lower() == "repeat":
                 self.write_to_file("do{\n")
+                self.ind_count += 1
                 continue       
             if child.getText().lower() == "until":
+                self.ind_count -= 1
                 self.write_to_file("}while(")
                 continue
             self.visit(child)
@@ -287,7 +321,6 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#arg_list.
     def visitArg_list(self, ctx:pascalParser.Arg_listContext):
-        # print(ctx.getChildren())
         for child in ctx.getChildren():
             if child.getText() == ',':
                 self.write_to_file(',')
