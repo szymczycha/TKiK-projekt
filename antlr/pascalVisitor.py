@@ -160,7 +160,7 @@ class pascalVisitor(ParseTreeVisitor):
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
             self.write_to_file(f"{variable_type.get("type", ctx.type_spec().getText())} {var_name}{indexes};\n")
-        # print(self.declared_variables)
+        print(self.declared_variables)
 
 
     # Visit a parse tree produced by pascalParser#type_spec.
@@ -367,18 +367,52 @@ class pascalVisitor(ParseTreeVisitor):
                 continue
             self.visit(child)
 
+    def get_type_format_descriptor_for_type(self, c_type):
+        typeName = c_type.get("array_type", c_type.get("type"))
+        if typeName in ["int", "bool"]:
+            return "%i"
+        if typeName == "double":
+            return "%lf"
+        if typeName == "char" and typeName == "[]" :
+            return "%s"
+        
+        raise ValueError("Cannot get type descriptor for type: ", c_type)
 
     # Visit a parse tree produced by pascalParser#function_call.
     def visitFunction_call(self, ctx:pascalParser.Function_callContext):
-        # ctx.getToken(pascalParser.IDENTIFIER, 0)
         function_name = ctx.IDENTIFIER().getText()
+
         if function_name.lower() == "writeln":
             function_name = "printf"
+            writeln_argument = ""
+            variables_to_visit = []
+            for i, expression in enumerate(ctx.arg_list().expression()):
+                print(expression.getText())
+                if expression.term(0).factor(0).literal() is not None:
+                    if expression.term(0).factor(0).literal().STRING() is not None:
+                        writeln_argument += expression.term(0).factor(0).literal().getText()[1:-1]
+
+                if expression.term(0).factor(0).IDENTIFIER(0) is not None:
+                    var_name = expression.term(0).factor(0).IDENTIFIER(0).getText()
+                    type_format_descriptor = self.get_type_format_descriptor_for_type(self.declared_variables.get(var_name, self.declared_constants.get(var_name)))
+                    if type_format_descriptor is None:
+                        raise ValueError(f"{var_name} is not declared in constants or variables")
+                    
+                    writeln_argument += type_format_descriptor
+                    variables_to_visit.append(expression)
+                         
+            self.write_to_file(f"{function_name}(\"{writeln_argument}\"")
+            for var in variables_to_visit:
+                self.write_to_file(", &")
+                self.visit(var)
+            self.write_to_file(f")")
+            return
+        
         if function_name.lower() == "readln":
             function_name = "scanf"
-            type_format_descriptor = "%i"
+            var_name = ctx.arg_list().expression(0).term(0).factor(0).IDENTIFIER(0).getText()
+            type_format_descriptor = self.get_type_format_descriptor_for_type(self.declared_variables.get(var_name, self.declared_constants.get(var_name)))
             self.write_to_file(f"{function_name}(\"{type_format_descriptor}\", &")
-            var_name = ctx.arg_list().expression(0).getText()
             self.visit(ctx.arg_list().expression(0))        
             self.write_to_file(f")")
             return
@@ -483,8 +517,10 @@ class pascalVisitor(ParseTreeVisitor):
                 self.write_to_file(child.getText())
                 continue
             if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.IDENTIFIER:
+                
                 if child.getText() not in list(self.declared_constants.keys()) + list(self.declared_variables.keys()):
                     raise ValueError(f"{child.getText()} is not declared")
+                
                 self.write_to_file(child.getText())
                 continue       
             self.visit(child)
