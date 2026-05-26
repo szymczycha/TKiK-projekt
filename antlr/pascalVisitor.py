@@ -1,5 +1,6 @@
 # Generated from pascal.g4 by ANTLR 4.13.2
 from antlr4 import *
+from copy import deepcopy
 if "." in __name__:
     from .pascalParser import pascalParser
 else:
@@ -27,7 +28,7 @@ class pascalVisitor(ParseTreeVisitor):
         elif result_type == "boolean":
             result_type = "bool"
         elif result_type == "string":
-            result_type = "char[]"
+            result_type = "char[]" # TODO fix cause not sure if it works
         elif result_type == "real":
             result_type = "double"
         return result_type
@@ -42,6 +43,7 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#program.
     def visitProgram(self, ctx:pascalParser.ProgramContext):
         self.write_to_file("#include <stdio.h>\n")
+        self.write_to_file("#include <stdbool.h>\n")
         self.visit(ctx.getChild(0))
         self.visit(ctx.block().declarations())
         self.write_to_file("int main(){\n")
@@ -84,8 +86,39 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#const_decl.
     def visitConst_decl(self, ctx:pascalParser.Const_declContext):
-        return self.visitChildren(ctx)
+        text = ctx.literal().getText()
+        const_decl = {}
+        if text[0] in "'\"" and text[-1] in "'\"":
+            const_decl["type"] = "char"
+            const_decl["paren"] = "[]"
+        try:
+            float(text)
+            is_float = True
+        except:
+            is_float = False
 
+        try:
+            int(text)
+            is_int = True
+        except:
+            is_int = False
+
+        if is_float and not is_int:
+            const_decl["type"] = "double"
+
+        if is_int:
+            const_decl["type"] = "int"
+
+        if text.lower() in ["true","false"]:
+            const_decl["type"] = "bool"
+
+        for id_ctx in ctx.IDENTIFIER():
+            const_name = id_ctx.getText()
+            self.declared_constants[const_name] = const_decl
+            self.write_to_file(f"{const_decl['type']} {const_name}{const_decl.get("paren", "")} = ")
+            self.visitLiteral(ctx.literal())
+            self.write_to_file(f";\n")
+        print(self.declared_constants)
 
     # Visit a parse tree produced by pascalParser#var_declarations.
     def visitVar_declarations(self, ctx:pascalParser.Var_declarationsContext):
@@ -95,32 +128,39 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#var_decl.
     def visitVar_decl(self, ctx:pascalParser.Var_declContext):
         variable_names = [id.getText() for id in ctx.IDENTIFIER()]
-        variable_type = None
+        variable_type = {}
         indexes = ""
         if ctx.type_spec().KW_INTEGER() is not None:
-            variable_type = "int"
+            variable_type["type"] = "int"
         if ctx.type_spec().KW_REAL() is not None:
-            variable_type = "double"
+            variable_type["type"] = "double"
         if ctx.type_spec().KW_STRING() is not None:
             indexes += "[]" # TODO test bo nie wiem czy to zadziała
-            variable_type = "char"
+            variable_type["type"] = "char"
+            variable_type["paren"] = "[]"
         if ctx.type_spec().KW_BOOLEAN() is not None:
-            variable_type = "bool"
+            variable_type["type"] = "bool"
         if ctx.type_spec().IDENTIFIER() is not None:
             print("DECLARING NAMED TYPES NOT IMPLEMENTED")
         if ctx.type_spec().KW_ARRAY() is not None: 
             # print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
+            variable_type["type"] = "array"
+            variable_type["paren"] = "[]"
             array_type = self.translate_var_type(ctx.type_spec().type_spec().getText().lower())
             array_max_size = ctx.type_spec().array_index_type(0).NUMBER()[-1] # only 1d arrays for now
+            sizes = []
             for a_i_t in ctx.type_spec().array_index_type():
                 indexes += f"[{a_i_t.NUMBER()[-1]}]"
+                sizes.append(int(f"{a_i_t.NUMBER()[-1]}")) # why
             print("array_type:", array_type, array_max_size)
-            variable_type = f"{array_type}"
+            variable_type["array_type"] = array_type
+            variable_type["shape"] = tuple(sizes)
 
 
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
-            self.write_to_file(f"{variable_type} {var_name}{indexes};\n")
+            self.write_to_file(f"{variable_type.get("type", ctx.type_spec().getText())} {var_name}{indexes};\n")
+        # print(self.declared_variables)
 
 
     # Visit a parse tree produced by pascalParser#type_spec.
@@ -135,13 +175,17 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#func_declaration.
     def visitFunc_declaration(self, ctx:pascalParser.Func_declarationContext):
-        result_type = ctx.type_spec().getText().lower()
+        declared_variables_snapshot = deepcopy(self.declared_variables)
+        
+        result_type = ctx.type_spec().getText().lower() 
         result_type = self.translate_var_type(result_type)
         self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
         self.visit(ctx.func_arguments())
         self.file.write("){\n")
         self.visit(ctx.block())
         self.file.write("}\n")
+
+        self.declared_variables = declared_variables_snapshot
 
     # Visit a parse tree produced by pascalParser#func_arguments.
     def visitFunc_arguments(self, ctx:pascalParser.Func_argumentsContext):
@@ -155,12 +199,20 @@ class pascalVisitor(ParseTreeVisitor):
     def visitFunc_argument_grp(self, ctx:pascalParser.Func_argument_grpContext):
         var_type = self.translate_var_type(ctx.type_spec().getText().lower())
         for i, id in enumerate(ctx.IDENTIFIER()):
-            self.file.write(f"{var_type} {id.getText()}")
+            variable_name = id.getText()
+            
+            self.declared_variables[variable_name] = {
+                "type": var_type
+            }
+
+            self.file.write(f"{var_type} {variable_name}")
             if i != len(ctx.IDENTIFIER())-1:
                 self.file.write(",")
 
     # Visit a parse tree produced by pascalParser#proc_declaration.
     def visitProc_declaration(self, ctx:pascalParser.Proc_declarationContext):
+        declared_variables_snapshot = deepcopy(self.declared_variables)
+
         result_type = None
         # print(result_type)
         result_type = self.translate_var_type(result_type)
@@ -171,6 +223,7 @@ class pascalVisitor(ParseTreeVisitor):
         self.visit(ctx.block())
         self.file.write("}\n")
 
+        self.declared_variables = declared_variables_snapshot
 
 
     # Visit a parse tree produced by pascalParser#block.
@@ -430,6 +483,8 @@ class pascalVisitor(ParseTreeVisitor):
                 self.write_to_file(child.getText())
                 continue
             if isinstance(child, TerminalNode) and child.getSymbol().type == pascalLexer.IDENTIFIER:
+                if child.getText() not in list(self.declared_constants.keys()) + list(self.declared_variables.keys()):
+                    raise ValueError(f"{child.getText()} is not declared")
                 self.write_to_file(child.getText())
                 continue       
             self.visit(child)
@@ -459,7 +514,6 @@ class pascalVisitor(ParseTreeVisitor):
     def visitLiteral(self, ctx:pascalParser.LiteralContext):
         if ctx.array_literal() is not None:
             self.visit(ctx.array_literal())
-            pass
         if ctx.NUMBER() is not None:
             self.write_to_file(ctx.getText())
         if ctx.STRING() is not None:
