@@ -5,8 +5,8 @@ from antlr.pascalVisitor import pascalVisitor
 from helper.functions import print_tree
 
 for i in range(1, 19):
-    # filename = f"pascal_code/hello_world.pas"
     filename = f"pascal_code/{i}.pas"
+    # filename = f"pascal_code/hello_world.pas"
     print(filename)
 
     input_stream = FileStream(filename)
@@ -23,4 +23,4 @@ for i in range(1, 19):
         visitor = pascalVisitor(out_file)
         tree.accept(visitor)
         
-    print(tree.toStringTree(recog=parser))
+    # print(tree.toStringTree(recog=parser))
