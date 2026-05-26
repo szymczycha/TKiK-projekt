@@ -144,7 +144,7 @@ class pascalVisitor(ParseTreeVisitor):
             print("DECLARING NAMED TYPES NOT IMPLEMENTED")
         if ctx.type_spec().KW_ARRAY() is not None: 
             # print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
-            variable_type["type"] = "array"
+            variable_type["is_array"] = True
             variable_type["paren"] = "[]"
             array_type = self.translate_var_type(ctx.type_spec().type_spec().getText().lower())
             array_max_size = ctx.type_spec().array_index_type(0).NUMBER()[-1] # only 1d arrays for now
@@ -153,7 +153,7 @@ class pascalVisitor(ParseTreeVisitor):
                 indexes += f"[{a_i_t.NUMBER()[-1]}]"
                 sizes.append(int(f"{a_i_t.NUMBER()[-1]}")) # why
             print("array_type:", array_type, array_max_size)
-            variable_type["array_type"] = array_type
+            variable_type["type"] = array_type
             variable_type["shape"] = tuple(sizes)
 
 
@@ -368,7 +368,7 @@ class pascalVisitor(ParseTreeVisitor):
             self.visit(child)
 
     def get_type_format_descriptor_for_type(self, c_type):
-        typeName = c_type.get("array_type", c_type.get("type"))
+        typeName = c_type.get("type")
         if typeName in ["int", "bool"]:
             return "%i"
         if typeName == "double":
@@ -401,9 +401,9 @@ class pascalVisitor(ParseTreeVisitor):
                     writeln_argument += type_format_descriptor
                     variables_to_visit.append(expression)
                          
-            self.write_to_file(f"{function_name}(\"{writeln_argument}\"")
+            self.write_to_file(f"{function_name}(\"{writeln_argument}\\n\"")
             for var in variables_to_visit:
-                self.write_to_file(", &")
+                self.write_to_file(", ")
                 self.visit(var)
             self.write_to_file(f")")
             return
