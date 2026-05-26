@@ -3,6 +3,10 @@ program Test9;
 type
   TIndex = integer;
 
+const
+  c, d = 5;
+  e = 5.2;
+  f = 'xdtest';
 var
   a, b: integer;
   flag: boolean;

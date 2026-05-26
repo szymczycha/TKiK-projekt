@@ -1,4 +1,6 @@
 program Test4;
+var
+  sum, i, j : integer;
 begin
   sum := 0;
 

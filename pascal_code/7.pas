@@ -1,4 +1,6 @@
 program Test7;
+var
+  a, b, c : integer;
 begin
   a := max(10, 20);
   b := min(a, 5 + 3 * 2);
