@@ -1,5 +1,6 @@
 # Generated from pascal.g4 by ANTLR 4.13.2
 from antlr4 import *
+from pprint import pp
 from copy import deepcopy
 if "." in __name__:
     from .pascalParser import pascalParser
@@ -15,6 +16,7 @@ class pascalVisitor(ParseTreeVisitor):
         self.file = file
         self.declared_variables = dict()
         self.declared_constants = dict()
+        self.declared_named_types = dict()
         self.ind_count = 0
         self.add_indent = True
         self.indent = "    "
@@ -28,7 +30,7 @@ class pascalVisitor(ParseTreeVisitor):
         elif result_type == "boolean":
             result_type = "bool"
         elif result_type == "string":
-            result_type = "char[]" # TODO fix cause not sure if it works
+            result_type = "char*" # TODO fix cause not sure if it works
         elif result_type == "real":
             result_type = "double"
         return result_type
@@ -66,12 +68,78 @@ class pascalVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pascalParser#type_declarations.
     def visitType_declarations(self, ctx:pascalParser.Type_declarationsContext):
-        return self.visitChildren(ctx)
+        self.visitChildren(ctx)
+
+        for type_name in self.declared_named_types.keys():
+            type_struct = self.declared_named_types.get(type_name)
+            
+            if type_struct.get("is_record", False):
+                self.write_to_file(f"typedef struct ")
+                self.write_to_file("{\n")
+                self.ind_count += 1
+                for field in type_struct["properties"].keys():
+                    field_type_name = type_struct["properties"][field]["type"]
+                    is_array = type_struct["properties"][field].get("is_array", False)
+                    self.write_to_file(f"{field_type_name} {field}{"[]" if is_array else ""};\n")
+                self.ind_count -= 1
+                self.write_to_file("}")
+                self.write_to_file(f" {type_name};\n")
+
 
 
     # Visit a parse tree produced by pascalParser#type_decl.
     def visitType_decl(self, ctx:pascalParser.Type_declContext):
-        return self.visitChildren(ctx)
+        if ctx.type_spec() is not None:
+            print("RENAMING BASIC TYPES NOT SUPPORTED")
+        if ctx.record_spec() is not None:
+            record_spec = ctx.record_spec()
+            type_name = ctx.IDENTIFIER().getText()
+
+            print(type_name)
+
+            type_structure = {"type": type_name, "is_record": True, "properties": dict()}
+            for i, field in enumerate(record_spec.IDENTIFIER()):
+                field_name = field.getText()
+                field_type = record_spec.type_spec(i)
+                field_structure = {}
+                if field_type.KW_INTEGER() is not None:
+                    field_structure["type"] = "int"
+                if field_type.KW_REAL() is not None:
+                    field_structure["type"] = "double"
+                if field_type.KW_STRING() is not None:
+                    field_structure["type"] = "char*"
+                if field_type.KW_BOOLEAN() is not None:
+                    field_structure["type"] = "bool"
+                if field_type.IDENTIFIER() is not None:
+                    field_type_name = field_type.IDENTIFIER().getText()
+                    field_structure["type"] = field_type_name
+                    field_structure["is_record"] = True
+                    try:
+                        field_structure["properties"] = self.declared_named_types[field_type_name]["properties"]
+                    except:
+                        raise ValueError(f"{field_type_name} is not declared")
+                    print("USING NAMED TYPES AS RECORD FIELDS IS NOT IMPLEMENTED")
+
+                if field_type.KW_ARRAY() is not None: 
+                    field_structure["is_array"] = True
+                    field_structure["paren"] = "[]"
+                    array_type = self.translate_var_type(field_type.type_spec().getText().lower())
+                    array_max_size = field_type.array_index_type(0).NUMBER()[-1] # only 1d arrays for now
+                    sizes = []
+                    for a_i_t in field_type.array_index_type():
+                        # indexes += f"[{a_i_t.NUMBER()[-1]}]" ???
+                        sizes.append(int(f"{a_i_t.NUMBER()[-1]}")) # why
+                    field_structure["type"] = array_type
+                    field_structure["shape"] = tuple(sizes)
+
+                type_structure['properties'][field_name] = field_structure 
+            self.declared_named_types[type_name] = type_structure
+            # pp(self.declared_named_types)
+
+
+
+
+
 
 
     # Visit a parse tree produced by pascalParser#record_spec.
@@ -118,7 +186,6 @@ class pascalVisitor(ParseTreeVisitor):
             self.write_to_file(f"{const_decl['type']} {const_name}{const_decl.get("paren", "")} = ")
             self.visitLiteral(ctx.literal())
             self.write_to_file(f";\n")
-        print(self.declared_constants)
 
     # Visit a parse tree produced by pascalParser#var_declarations.
     def visitVar_declarations(self, ctx:pascalParser.Var_declarationsContext):
@@ -141,7 +208,7 @@ class pascalVisitor(ParseTreeVisitor):
         if ctx.type_spec().KW_BOOLEAN() is not None:
             variable_type["type"] = "bool"
         if ctx.type_spec().IDENTIFIER() is not None:
-            print("DECLARING NAMED TYPES NOT IMPLEMENTED")
+            print("DECLARING VARIABLES USING NAMED TYPES NOT IMPLEMENTED")
         if ctx.type_spec().KW_ARRAY() is not None: 
             # print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
             variable_type["is_array"] = True
@@ -152,7 +219,6 @@ class pascalVisitor(ParseTreeVisitor):
             for a_i_t in ctx.type_spec().array_index_type():
                 indexes += f"[{a_i_t.NUMBER()[-1]}]"
                 sizes.append(int(f"{a_i_t.NUMBER()[-1]}")) # why
-            print("array_type:", array_type, array_max_size)
             variable_type["type"] = array_type
             variable_type["shape"] = tuple(sizes)
 
@@ -160,7 +226,6 @@ class pascalVisitor(ParseTreeVisitor):
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
             self.write_to_file(f"{variable_type.get("type", ctx.type_spec().getText())} {var_name}{indexes};\n")
-        print(self.declared_variables)
 
 
     # Visit a parse tree produced by pascalParser#type_spec.
@@ -214,9 +279,7 @@ class pascalVisitor(ParseTreeVisitor):
         declared_variables_snapshot = deepcopy(self.declared_variables)
 
         result_type = None
-        # print(result_type)
         result_type = self.translate_var_type(result_type)
-        # print(result_type)
         self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
         self.visit(ctx.func_arguments())
         self.file.write("){\n")
@@ -387,7 +450,6 @@ class pascalVisitor(ParseTreeVisitor):
             writeln_argument = ""
             variables_to_visit = []
             for i, expression in enumerate(ctx.arg_list().expression()):
-                print(expression.getText())
                 if expression.term(0).factor(0).literal() is not None:
                     if expression.term(0).factor(0).literal().STRING() is not None:
                         writeln_argument += expression.term(0).factor(0).literal().getText()[1:-1]
@@ -496,7 +558,6 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#term.
     def visitTerm(self, ctx:pascalParser.TermContext):
         for i, child in enumerate(ctx.getChildren()):
-            # print(i, child.getText())
             if child.getText() in "*/":
                 self.write_to_file(child.getText())
                 continue
