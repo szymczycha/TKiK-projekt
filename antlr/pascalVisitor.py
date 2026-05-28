@@ -45,12 +45,14 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#program.
     def visitProgram(self, ctx:pascalParser.ProgramContext):
         self.write_to_file("#include <stdio.h>\n")
+        self.write_to_file("#include <math.h>\n")
         self.write_to_file("#include <stdbool.h>\n")
         self.visit(ctx.getChild(0))
         self.visit(ctx.block().declarations())
         self.write_to_file("int main(){\n")
         self.ind_count += 1
-        self.visit(ctx.block().statement_list())
+        if ctx.block().statement_list() is not None:
+            self.visit(ctx.block().statement_list())
         self.ind_count -= 1
         self.write_to_file("}")
         # return self.visitChildren(ctx)
