@@ -472,7 +472,7 @@ class pascalVisitor(ParseTreeVisitor):
                 self.visit(var)
             self.write_to_file(f")")
             return
-        
+
         if function_name.lower() == "readln":
             function_name = "scanf"
             var_name = ctx.arg_list().expression(0).term(0).factor(0).IDENTIFIER(0).getText()
@@ -481,6 +481,9 @@ class pascalVisitor(ParseTreeVisitor):
             self.visit(ctx.arg_list().expression(0))        
             self.write_to_file(f")")
             return
+        
+        if function_name not in list(self.declared_functions.keys()) + ["max", "min", "trunc", "sqrt"]:
+            raise ValueError(f"CALLING UNDECLARED FUNCTION {function_name}")
         
         self.write_to_file(f"{function_name}(")
         self.visit(ctx.arg_list())        
