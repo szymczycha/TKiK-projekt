@@ -95,7 +95,6 @@ class pascalVisitor(ParseTreeVisitor):
             record_spec = ctx.record_spec()
             type_name = ctx.IDENTIFIER().getText()
 
-            print(type_name)
 
             type_structure = {"type": type_name, "is_record": True, "properties": dict()}
             for i, field in enumerate(record_spec.IDENTIFIER()):
@@ -118,8 +117,7 @@ class pascalVisitor(ParseTreeVisitor):
                         field_structure["properties"] = self.declared_named_types[field_type_name]["properties"]
                     except:
                         raise ValueError(f"{field_type_name} is not declared")
-                    print("USING NAMED TYPES AS RECORD FIELDS IS NOT IMPLEMENTED")
-
+                    
                 if field_type.KW_ARRAY() is not None: 
                     field_structure["is_array"] = True
                     field_structure["paren"] = "[]"
@@ -208,9 +206,10 @@ class pascalVisitor(ParseTreeVisitor):
         if ctx.type_spec().KW_BOOLEAN() is not None:
             variable_type["type"] = "bool"
         if ctx.type_spec().IDENTIFIER() is not None:
-            print("DECLARING VARIABLES USING NAMED TYPES NOT IMPLEMENTED")
+            type_name = ctx.type_spec().IDENTIFIER().getText()
+            variable_type = deepcopy(self.declared_named_types[type_name])
+
         if ctx.type_spec().KW_ARRAY() is not None: 
-            # print("DECLARING ARRAY TYPES NOT IMPLEMENTED")
             variable_type["is_array"] = True
             variable_type["paren"] = "[]"
             array_type = self.translate_var_type(ctx.type_spec().type_spec().getText().lower())
@@ -226,7 +225,6 @@ class pascalVisitor(ParseTreeVisitor):
         for var_name in variable_names:
             self.declared_variables[var_name] = variable_type
             self.write_to_file(f"{variable_type.get("type", ctx.type_spec().getText())} {var_name}{indexes};\n")
-
 
     # Visit a parse tree produced by pascalParser#type_spec.
     def visitType_spec(self, ctx:pascalParser.Type_specContext):
