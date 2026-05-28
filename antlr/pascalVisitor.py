@@ -17,6 +17,7 @@ class pascalVisitor(ParseTreeVisitor):
         self.declared_variables = dict()
         self.declared_constants = dict()
         self.declared_named_types = dict()
+        self.declared_functions = dict()
         self.ind_count = 0
         self.add_indent = True
         self.indent = "    "
@@ -245,6 +246,7 @@ class pascalVisitor(ParseTreeVisitor):
         result_type = ctx.type_spec().getText().lower() 
         result_type = self.translate_var_type(result_type)
         self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
+        self.declared_functions[ctx.IDENTIFIER().getText()] = True
         self.visit(ctx.func_arguments())
         self.file.write("){\n")
         self.visit(ctx.block())
@@ -281,6 +283,7 @@ class pascalVisitor(ParseTreeVisitor):
         result_type = None
         result_type = self.translate_var_type(result_type)
         self.file.write(f"{result_type} {ctx.IDENTIFIER()}(")
+        self.declared_functions[ctx.IDENTIFIER().getText()] = True
         self.visit(ctx.func_arguments())
         self.file.write("){\n")
         self.visit(ctx.block())
@@ -478,6 +481,7 @@ class pascalVisitor(ParseTreeVisitor):
             self.visit(ctx.arg_list().expression(0))        
             self.write_to_file(f")")
             return
+        
         self.write_to_file(f"{function_name}(")
         self.visit(ctx.arg_list())        
         self.write_to_file(f")")
@@ -590,10 +594,13 @@ class pascalVisitor(ParseTreeVisitor):
     # Visit a parse tree produced by pascalParser#assignment.
     def visitAssignment(self, ctx:pascalParser.AssignmentContext):
         # self.write_to_file(ctx.IDENTIFIER(0).getText())
+        
         if ctx.IDENTIFIER(0).getText().lower() == "result":
             self.write_to_file("return ")
             self.visit(ctx.getChild(2)) # 1st is identifier 2nd is assign
             return
+        if ctx.IDENTIFIER(0).getText() not in list(self.declared_variables.keys()):
+            raise ValueError("ASSIGNMENT TO UNDECLARED VARIABLE")
         for i, child in enumerate(ctx.getChildren()):
             if child.getText() in "[].":
                 self.write_to_file(child.getText())
