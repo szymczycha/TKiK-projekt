@@ -1,15 +1,15 @@
-# Konwerter PASCAL do C
-Projekt konwertera progrmów w języku Pascal do języka C
+# Kompilator PASCAL do C
+Projekt kompilatora progrmów w języku Pascal do języka C
 
 - Autor:
     - Szymon Konieczny: skonieczny@student.agh.edu.pl
 
 - Założenia programu:
-    - konwerter
-    - planowany język implementacji: python
+    - kompilator
     - wejście: poprawny program w języku Pascal
     - wyjście: program przekonwertowany na program w języku C
-    - generator parserów: ANTLR
+    - język implementacji: python
+    - generator parserów: ANTLR4
 
  - Gramatyka jest w pliku [pascal.g4](https://github.com/szymczycha/TKiK-projekt/blob/main/pascal.g4)
  - Spis tokenów rozpoznawanych przez lexer:
@@ -65,3 +65,13 @@ Projekt konwertera progrmów w języku Pascal do języka C
 | COMMENT          | `'(*' .*? '*)' -> skip`                    | komentarz Pascalowy |
 | OTHER_COMMENT    | `'{' .*? '}' -> skip`                      | komentarz w nawiasach klamrowych |
 | LINE_COMMENT     | `'//' ~[\r\n]* -> skip`                    | komentarz jednoliniowy |
+
+### Przykład użycia
+Najprostszy przykład kompilacji plików:
+```bash
+python patocc.py kod_w_pascalu1.pas kod_w_pascalu2.pas kod_w_pascalu3.pas
+```
+Przykład kompilacji folderu plików w Pascalu z plikami wynikowymi:
+```bash
+python patocc.py .\patocc.py -d .\pascal_code\ -o .\compiled_pascal_to_c\
+```
