@@ -28,5 +28,4 @@ begin
       writeln(i, ' ');
   end;
 
-  writeln;
 end.
