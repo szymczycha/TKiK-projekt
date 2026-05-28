@@ -1,10 +1,7 @@
 program ArrayExample;
 
-type
-  IntArray = array[1..5] of integer;
-
 var
-  numbers : IntArray;
+  numbers : array[1..5] of integer;
   i       : integer;
   total   : integer;
 

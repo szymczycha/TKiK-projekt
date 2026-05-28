@@ -1,7 +1,5 @@
 program Test9;
 
-type
-  TIndex = integer;
 
 const
   c, d = 5;
