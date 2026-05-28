@@ -121,7 +121,7 @@ class pascalVisitor(ParseTreeVisitor):
                 if field_type.KW_ARRAY() is not None: 
                     field_structure["is_array"] = True
                     field_structure["paren"] = "[]"
-                    array_type = self.translate_var_type(field_type.type_spec().getText().lower())
+                    array_type = self.translate_var_type(field_type.type_spec().getText())
                     array_max_size = field_type.array_index_type(0).NUMBER()[-1] # only 1d arrays for now
                     sizes = []
                     for a_i_t in field_type.array_index_type():
