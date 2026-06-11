@@ -73,7 +73,7 @@ python patocc.py kod_w_pascalu1.pas kod_w_pascalu2.pas kod_w_pascalu3.pas
 ```
 Przykład kompilacji folderu plików w Pascalu z plikami wynikowymi:
 ```bash
-python patocc.py .\patocc.py -d .\pascal_code\ -o .\compiled_pascal_to_c\
+python .\patocc.py -d .\pascal_code\ -o .\compiled_pascal_to_c\
 ```
 
 Przykładowy plik w Pascalu:
